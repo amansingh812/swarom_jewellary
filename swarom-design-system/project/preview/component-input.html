@@ -1,0 +1,18 @@
+<!doctype html><html><head><meta charset="utf-8"><link rel="stylesheet" href="_card.css"></head>
+<body>
+  <div class="stack-12">
+    <span class="label">Pill input + form — the waitlist pattern</span>
+    <form style="display:flex;flex-direction:row;gap:8px;max-width:560px;">
+      <input type="email" placeholder="your@email.com" style="flex:1;background:var(--cream-50);border:1px solid var(--hairline);border-radius:999px;padding:12px 20px;font-family:var(--font-sans);font-size:13px;color:var(--charcoal);outline:none;">
+      <button style="background:var(--charcoal);color:var(--cream);border:none;border-radius:999px;padding:12px 24px;font-family:var(--font-sans);font-size:13px;font-weight:500;letter-spacing:0.02em;">Notify me</button>
+    </form>
+    <div class="stack-8" style="max-width:560px;">
+      <input placeholder="Engraving (up to 12 characters)" style="background:var(--cream-50);border:1px solid var(--hairline);border-radius:999px;padding:12px 20px;font-family:var(--font-sans);font-size:13px;color:var(--charcoal);outline:none;">
+      <div style="display:flex;align-items:center;gap:10px;padding:12px 20px;background:var(--cream-50);border:1px solid var(--charcoal);border-radius:999px;font-family:var(--font-sans);font-size:13px;color:var(--charcoal);">
+        <span>amelia.</span><span style="width:1px;height:12px;background:var(--charcoal);animation:b 1s steps(2) infinite;"></span>
+      </div>
+    </div>
+    <div class="mono">Pill border-radius 999. Border 1px hairline → charcoal on focus. Background cream-50.</div>
+  </div>
+  <style>@keyframes b { to { opacity: 0 } }</style>
+</body></html>

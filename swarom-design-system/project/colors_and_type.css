@@ -1,0 +1,285 @@
+/* ──────────────────────────────────────────────────────────────────
+   Swarom — Colors & Type Foundations
+   "Your story, told in silver."
+
+   This file is the source of truth for design tokens. Components and
+   slides should reference these CSS variables, not hard-coded values.
+   ─────────────────────────────────────────────────────────────────── */
+
+/* ─── FONT IMPORTS ────────────────────────────────────────────────
+   Updated to match the Mentis-style reference brief:
+   • Playfair Display — high-contrast serif display
+   • Montserrat       — geometric sans for nav / UI (very light + wide tracking)
+   • Great Vibes      — free Google-Fonts stand-in for the gold signature script
+                         (commercial original ≈ Brittany Signature / Autography)
+   ──────────────────────────────────────────────────────────────── */
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500&family=Montserrat:wght@200;300;400;500;600&family=Great+Vibes&display=swap");
+
+:root {
+  /* ─── BASE COLORS ────────────────────────────────────────────────
+     The palette is warm-cream + ink + a single warm gold accent.
+     Silvers exist as cool neutrals — used sparingly, never as a fill. */
+
+  /* Cream / paper — page backgrounds, surfaces */
+  --cream:        #F6F1EA;   /* canonical page bg */
+  --cream-50:     #FBF8F4;   /* lightest — cards on cream */
+  --cream-100:    #F6F1EA;   /* same as --cream */
+  --cream-200:    #EDE3D4;   /* warmer cream, hover surfaces */
+
+  /* Charcoal / ink — body text, buttons, wordmark */
+  --charcoal:     #1F1B16;   /* default foreground */
+  --charcoal-800: #2A241D;
+  --charcoal-700: #3A332A;
+
+  /* Silver — cool neutrals (rare; reserved for product/material refs) */
+  --silver:       #C9C7C2;
+  --silver-light: #E6E4DF;
+  --silver-dark:  #9A9893;
+
+  /* Gold — the one warm accent (underlines, marks, focus glints) */
+  --gold:         #B8956A;
+  --gold-soft:    #D9C09A;   /* tints for shimmer/glow */
+
+  /* Signal colors — used sparingly */
+  --success:      #5A6B3F;   /* moss — botanical, not bright */
+  --error:        #8B2E2E;   /* oxidised silver red */
+
+  /* ─── SEMANTIC FG / BG ──────────────────────────────────────── */
+  --bg:           var(--cream);
+  --bg-elev:      var(--cream-50);
+  --bg-warm:      var(--cream-200);
+
+  --fg1:          var(--charcoal);          /* primary text */
+  --fg2:          rgba(31, 27, 22, 0.80);   /* secondary */
+  --fg3:          rgba(31, 27, 22, 0.65);   /* tertiary / lede */
+  --fg4:          rgba(31, 27, 22, 0.50);   /* hint / meta */
+  --fg5:          rgba(31, 27, 22, 0.30);   /* divider / hairline */
+  --fg-inverse:   var(--cream);             /* text on charcoal */
+
+  --hairline:     rgba(31, 27, 22, 0.15);   /* borders, dividers */
+  --hairline-strong: rgba(31, 27, 22, 0.40);
+
+  /* ─── TYPE FAMILIES ─────────────────────────────────────────── */
+  --font-serif:   "Playfair Display", "Cormorant Garamond", Georgia, serif;
+  --font-sans:    "Montserrat", "Inter", system-ui, -apple-system, sans-serif;
+  --font-script:  "Great Vibes", "Brittany Signature", "Autography", cursive;
+  --font-mono:    ui-monospace, "SF Mono", Menlo, monospace;
+
+  /* ─── TRACKING ─────────────────────────────────────────────── */
+  --tracking-tight:   -0.02em;
+  --tracking-normal:   0;
+  --tracking-wide:     0.04em;
+  --tracking-wider:    0.08em;
+  --tracking-widest:   0.20em;  /* eyebrow / nav / meta — uppercase */
+
+  /* ─── RADII ─────────────────────────────────────────────────── */
+  --radius-0:    0;
+  --radius-sm:   4px;
+  --radius-md:   8px;
+  --radius-lg:   14px;
+  --radius-xl:   24px;
+  --radius-pill: 999px;        /* default for buttons, inputs */
+
+  /* ─── SHADOWS ───────────────────────────────────────────────── */
+  /* Warm, low-contrast. Never blue-tinted. */
+  --shadow-hairline: 0 0 0 1px var(--hairline);
+  --shadow-soft:     0 1px 2px rgba(31, 27, 22, 0.04),
+                     0 8px 24px rgba(31, 27, 22, 0.06);
+  --shadow-card:     0 1px 3px rgba(31, 27, 22, 0.06),
+                     0 12px 40px rgba(31, 27, 22, 0.08);
+  --shadow-lift:     0 4px 12px rgba(31, 27, 22, 0.08),
+                     0 24px 60px rgba(31, 27, 22, 0.12);
+
+  /* ─── SPACING (4-base) ─────────────────────────────────────── */
+  --s-1:  4px;
+  --s-2:  8px;
+  --s-3:  12px;
+  --s-4:  16px;
+  --s-5:  20px;
+  --s-6:  24px;
+  --s-8:  32px;
+  --s-10: 40px;
+  --s-12: 48px;
+  --s-16: 64px;
+  --s-20: 80px;
+  --s-24: 96px;
+
+  /* ─── MOTION ───────────────────────────────────────────────── */
+  --ease-out:     cubic-bezier(0.22, 0.61, 0.36, 1);
+  --ease-in-out:  cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-fast:     150ms;
+  --dur-base:     250ms;
+  --dur-slow:     600ms;
+  --dur-ambient:  4s;
+}
+
+/* ──────────────────────────────────────────────────────────────────
+   SEMANTIC TYPE STYLES
+
+   The display type is Cormorant Garamond. It carries the brand.
+   Use italic for taglines / pull-quotes. Body type is Inter, set
+   loose and small. Eyebrows, nav and meta are UPPERCASE Inter at
+   ~11px with the widest tracking (.2em).
+   ─────────────────────────────────────────────────────────────────── */
+
+.swr-display,
+.swr-h0 {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: clamp(56px, 7vw, 96px);
+  line-height: 1.05;
+  letter-spacing: var(--tracking-tight);
+  color: var(--fg1);
+}
+
+.swr-signature {
+  font-family: var(--font-script);
+  font-weight: 400;
+  font-size: clamp(40px, 5vw, 72px);
+  line-height: 1.1;
+  color: var(--gold);
+  letter-spacing: 0.01em;
+}
+
+.swr-h1 {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: clamp(40px, 5vw, 64px);
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  color: var(--fg1);
+}
+
+.swr-h2 {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: clamp(32px, 3.5vw, 44px);
+  line-height: 1.2;
+  letter-spacing: -0.005em;
+  color: var(--fg1);
+}
+
+.swr-h3 {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  font-size: 28px;
+  line-height: 1.25;
+  color: var(--fg1);
+}
+
+.swr-h4 {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  font-size: 22px;
+  line-height: 1.3;
+  color: var(--fg1);
+}
+
+.swr-tagline {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(20px, 2vw, 26px);
+  line-height: 1.35;
+  color: var(--fg2);
+}
+
+.swr-lede {
+  font-family: var(--font-sans);
+  font-weight: 300;
+  font-size: 17px;
+  line-height: 1.55;
+  color: var(--fg3);
+}
+
+.swr-body {
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--fg2);
+}
+
+.swr-body-sm {
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--fg3);
+}
+
+.swr-eyebrow,
+.swr-meta {
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 1;
+  letter-spacing: var(--tracking-widest);
+  text-transform: uppercase;
+  color: var(--fg2);
+}
+
+.swr-meta-sm {
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: 10px;
+  letter-spacing: var(--tracking-widest);
+  text-transform: uppercase;
+  color: var(--fg4);
+}
+
+.swr-price {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  font-size: 18px;
+  letter-spacing: var(--tracking-wide);
+  color: var(--fg1);
+}
+
+/* ──────────────────────────────────────────────────────────────────
+   TEXTURES & ATMOSPHERE
+   ─────────────────────────────────────────────────────────────────── */
+
+.swr-grain::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.04;
+  z-index: 1;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' /%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' /%3E%3C/svg%3E");
+}
+
+.swr-hairline-rule {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+}
+.swr-hairline-rule::before,
+.swr-hairline-rule::after {
+  content: "";
+  display: block;
+  height: 1px;
+  width: 32px;
+  background: var(--hairline-strong);
+}
+
+/* Gold shimmer underline — used under the wordmark */
+@keyframes swr-shimmer {
+  0%, 100% { opacity: 0.3; transform: scaleX(0.4); }
+  50%      { opacity: 1;   transform: scaleX(1); }
+}
+.swr-shimmer {
+  height: 1px;
+  width: 96px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  animation: swr-shimmer var(--dur-ambient) ease-in-out infinite;
+  transform-origin: center;
+}
+
+/* Gentle ambient float — for soft background orbs only */
+@keyframes swr-float {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-10px); }
+}
+.swr-float { animation: swr-float 6s ease-in-out infinite; }

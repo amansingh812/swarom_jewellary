@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 500">
+  <defs>
+    <linearGradient id="bg2" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#F6F1EA"></stop>
+      <stop offset="1" stop-color="#EDE3D4"></stop>
+    </linearGradient>
+    <radialGradient id="silver2" cx="0.5" cy="0.4" r="0.5">
+      <stop offset="0" stop-color="#F2F0EC"></stop>
+      <stop offset="0.7" stop-color="#C9C7C2"></stop>
+      <stop offset="1" stop-color="#9A9893"></stop>
+    </radialGradient>
+  </defs>
+  <rect width="400" height="500" fill="url(#bg2)"></rect>
+  
+  <ellipse cx="200" cy="270" rx="120" ry="125" fill="none" stroke="url(#silver2)" stroke-width="16"></ellipse>
+  <ellipse cx="200" cy="270" rx="120" ry="125" fill="none" stroke="#9A9893" stroke-width="0.5"></ellipse>
+  
+  <ellipse cx="200" cy="275" rx="106" ry="111" fill="#EDE3D4" opacity="0.6"></ellipse>
+  
+  <text x="200" y="170" text-anchor="middle" font-family="Cormorant Garamond, Georgia, serif" font-style="italic" font-size="18" fill="#1F1B16" opacity="0.45">— 09 · 06 · 2024 —</text>
+</svg>

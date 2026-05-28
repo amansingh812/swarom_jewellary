@@ -1,0 +1,27 @@
+<!doctype html><html><head><meta charset="utf-8"><link rel="stylesheet" href="_card.css">
+<style>
+  .btn { font-family: var(--font-sans); font-weight: 500; font-size: 13px; letter-spacing: 0.02em; border-radius: 999px; padding: 12px 22px; cursor:pointer; transition: all .15s var(--ease-out); border: 1px solid transparent; }
+  .btn-primary { background: var(--charcoal); color: var(--cream); }
+  .btn-primary:hover { background: var(--charcoal-800); }
+  .btn-secondary { background: transparent; color: var(--charcoal); border-color: var(--hairline-strong); }
+  .btn-secondary:hover { border-color: var(--charcoal); }
+  .btn-ghost { background: transparent; color: var(--charcoal); }
+  .btn-ghost:hover { background: var(--cream-200); }
+</style>
+</head>
+<body>
+  <div class="stack-12">
+    <span class="label">Buttons — pill, sans 500, 13px, .02em tracking</span>
+    <div class="row" style="gap:14px;flex-wrap:wrap;">
+      <button class="btn btn-primary">Notify me</button>
+      <button class="btn btn-secondary">Read our story</button>
+      <button class="btn btn-ghost">Browse the collection</button>
+      <button class="btn btn-primary" disabled style="opacity:.5;">Adding…</button>
+    </div>
+    <div class="row" style="gap:14px;align-items:center;">
+      <a style="font-family:var(--font-sans);font-size:13px;color:var(--charcoal);letter-spacing:0.04em;border-bottom:1px solid var(--hairline);padding-bottom:2px;text-transform:uppercase;font-weight:500;">View piece &nbsp;→</a>
+      <a style="font-family:var(--font-sans);font-size:13px;color:var(--fg3);">Inline text link</a>
+    </div>
+    <div class="mono">Primary · charcoal / cream &nbsp;·&nbsp; Secondary · hairline border &nbsp;·&nbsp; Ghost · transparent</div>
+  </div>
+</body></html>

@@ -1,30 +1,41 @@
 import type { Metadata, Viewport } from "next";
-import { Cormorant_Garamond, Inter } from "next/font/google";
+import { Playfair_Display, Montserrat, Great_Vibes } from "next/font/google";
 import "./globals.css";
 
-const serif = Cormorant_Garamond({
+const serif = Playfair_Display({
   subsets: ["latin"],
-  weight: ["400", "500", "600"],
+  weight: ["400", "500", "600", "700"],
+  style: ["normal", "italic"],
   variable: "--font-serif",
   display: "swap",
 });
 
-const sans = Inter({
+const sans = Montserrat({
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600"],
+  weight: ["200", "300", "400", "500", "600"],
   variable: "--font-sans",
   display: "swap",
 });
 
+const script = Great_Vibes({
+  subsets: ["latin"],
+  weight: ["400"],
+  variable: "--font-script",
+  display: "swap",
+});
+
 export const metadata: Metadata = {
-  title: "Swarom — Personalized 925 Silver Jewellery",
+  title: {
+    default: "Swarom — Personalized 925 Silver Jewellery",
+    template: "%s · Swarom",
+  },
   description:
-    "Swarom is launching soon. Personalized 925 sterling silver jewellery, handcrafted in Bengaluru. Your story, made to last.",
+    "Personalized 925 sterling silver jewellery, handcrafted in Bengaluru. Made to order. Made to last.",
   metadataBase: new URL("https://swarom.in"),
   openGraph: {
     title: "Swarom — Personalized 925 Silver Jewellery",
     description:
-      "Personalized 925 sterling silver jewellery, handcrafted in Bengaluru. Launching soon.",
+      "Personalized 925 sterling silver jewellery, handcrafted in Bengaluru.",
     url: "https://swarom.in",
     siteName: "Swarom",
     locale: "en_IN",
@@ -34,11 +45,9 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Swarom — Personalized 925 Silver Jewellery",
     description:
-      "Personalized 925 sterling silver jewellery, handcrafted in Bengaluru. Launching soon.",
+      "Personalized 925 sterling silver jewellery, handcrafted in Bengaluru.",
   },
-  icons: {
-    icon: "/favicon.svg",
-  },
+  icons: { icon: "/favicon.svg" },
 };
 
 export const viewport: Viewport = {
@@ -49,12 +58,13 @@ export const viewport: Viewport = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${serif.variable} ${sans.variable}`}>
-      <body className="grain">{children}</body>
+    <html
+      lang="en"
+      className={`${serif.variable} ${sans.variable} ${script.variable}`}
+    >
+      <body className="swr-grain">{children}</body>
     </html>
   );
 }

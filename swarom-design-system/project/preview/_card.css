@@ -1,0 +1,24 @@
+/* Shared layout for design-system preview cards.
+   Cards target 700px wide; height varies. */
+@import url("../colors_and_type.css");
+
+html, body { margin: 0; padding: 0; background: var(--cream); color: var(--charcoal); }
+body {
+  font-family: var(--font-sans);
+  min-height: 100vh;
+  padding: 24px 28px;
+  position: relative;
+  overflow: hidden;
+}
+.row     { display: flex; align-items: center; gap: 16px; }
+.col     { display: flex; flex-direction: column; gap: 8px; }
+.stack-2 { display: flex; flex-direction: column; gap: 2px; }
+.stack-4 { display: flex; flex-direction: column; gap: 4px; }
+.stack-8 { display: flex; flex-direction: column; gap: 8px; }
+.stack-12{ display: flex; flex-direction: column; gap: 12px; }
+.stack-16{ display: flex; flex-direction: column; gap: 16px; }
+.stack-20{ display: flex; flex-direction: column; gap: 20px; }
+.grow    { flex: 1; }
+.mono    { font-family: var(--font-mono); font-size: 11px; color: var(--fg4); letter-spacing: 0.02em; }
+.label   { font-family: var(--font-sans); font-size: 10px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--fg4); }
+.swatch  { border-radius: 6px; border: 1px solid var(--hairline); }

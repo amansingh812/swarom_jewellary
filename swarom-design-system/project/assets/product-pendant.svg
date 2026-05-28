@@ -1,0 +1,27 @@
+
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 500">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#EDE3D4"></stop>
+      <stop offset="1" stop-color="#F6F1EA"></stop>
+    </linearGradient>
+    <radialGradient id="silver" cx="0.5" cy="0.35" r="0.55">
+      <stop offset="0" stop-color="#F2F0EC"></stop>
+      <stop offset="0.6" stop-color="#C9C7C2"></stop>
+      <stop offset="1" stop-color="#9A9893"></stop>
+    </radialGradient>
+    <radialGradient id="silverChain" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#E6E4DF"></stop>
+      <stop offset="1" stop-color="#9A9893"></stop>
+    </radialGradient>
+  </defs>
+  <rect width="400" height="500" fill="url(#bg)"></rect>
+  
+  <path d="M80 90 Q200 200 320 90" fill="none" stroke="url(#silverChain)" stroke-width="2.5" stroke-linecap="round"></path>
+  
+  <path d="M200 165&#xA;           C 235 165 260 195 260 230&#xA;           C 260 275 230 320 200 340&#xA;           C 170 320 140 275 140 230&#xA;           C 140 195 165 165 200 165 Z" fill="url(#silver)" stroke="#9A9893" stroke-width="0.5"></path>
+  
+  <text x="200" y="255" text-anchor="middle" font-family="Cormorant Garamond, Georgia, serif" font-style="italic" font-size="44" fill="#1F1B16" opacity="0.55">a</text>
+  
+  <ellipse cx="200" cy="160" rx="10" ry="6" fill="none" stroke="#9A9893" stroke-width="2"></ellipse>
+</svg>
