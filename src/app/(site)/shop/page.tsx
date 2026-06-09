@@ -2,6 +2,7 @@ import { Eyebrow } from "@/components/ui/Eyebrow";
 import { ProductTile } from "@/components/site/ProductTile";
 import { ShopFilters } from "./ShopFilters";
 import { getProducts } from "@/lib/products";
+import { getWishlistProductIds } from "@/app/actions/wishlist";
 
 interface ShopPageProps {
   searchParams: {
@@ -16,7 +17,10 @@ export const metadata = {
 };
 
 export default async function ShopPage({ searchParams }: ShopPageProps) {
-  const products = await getProducts({ category: searchParams.cat ?? "all" });
+  const [products, wishlist] = await Promise.all([
+    getProducts({ category: searchParams.cat ?? "all" }),
+    getWishlistProductIds(),
+  ]);
 
   return (
     <div className="mx-auto max-w-marketing px-5 pt-10 pb-16 md:px-10 md:pt-16 md:pb-24">
@@ -39,7 +43,7 @@ export default async function ShopPage({ searchParams }: ShopPageProps) {
       ) : (
         <div className="grid grid-cols-2 gap-x-4 gap-y-8 md:grid-cols-3 md:gap-x-6 md:gap-y-10 lg:grid-cols-4">
           {products.map((p) => (
-            <ProductTile key={p.id} product={p} />
+            <ProductTile key={p.id} product={p} inWishlist={wishlist.has(p.id)} />
           ))}
         </div>
       )}

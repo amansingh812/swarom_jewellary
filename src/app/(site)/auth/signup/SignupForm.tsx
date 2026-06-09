@@ -2,12 +2,19 @@
 
 import { useState, FormEvent } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { createBrowserSupabaseClient } from "@/lib/supabase/client";
 import { Button } from "@/components/ui/Button";
 
+function safeNext(next: string | null): string {
+  if (!next || !next.startsWith("/") || next.startsWith("//")) return "/account";
+  return next;
+}
+
 export function SignupForm() {
   const router = useRouter();
+  const params = useSearchParams();
+  const next = safeNext(params.get("next"));
   const supabase = createBrowserSupabaseClient();
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
@@ -28,7 +35,7 @@ export function SignupForm() {
         password,
         options: {
           data: { full_name: fullName },
-          emailRedirectTo: `${location.origin}/auth/callback`,
+          emailRedirectTo: `${location.origin}/auth/callback?next=${encodeURIComponent(next)}`,
         },
       });
       if (error) throw error;
@@ -38,7 +45,7 @@ export function SignupForm() {
           text: "Check your inbox to confirm your email — then sign in.",
         });
       } else {
-        router.push("/account");
+        router.push(next);
         router.refresh();
       }
     } catch (err: unknown) {

@@ -1,7 +1,7 @@
-import { redirect } from "next/navigation";
-import { createServerSupabaseClient } from "@/lib/supabase/server";
 import { Providers } from "@/components/site/Providers";
 import { AdminSidebar } from "./AdminSidebar";
+import { isSupabaseConfigured } from "@/lib/supabase/server";
+import { requireAdmin } from "@/lib/auth/server";
 
 export const metadata = {
   title: "Admin · Swarom",
@@ -16,23 +16,8 @@ export default async function AdminLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const configured =
-    process.env.NEXT_PUBLIC_SUPABASE_URL &&
-    !process.env.NEXT_PUBLIC_SUPABASE_URL.includes("YOUR-PROJECT");
-
-  if (configured) {
-    const supabase = createServerSupabaseClient();
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
-    if (!user) redirect("/auth/login?next=/admin");
-
-    const { data: profile } = await supabase
-      .from("profiles")
-      .select("role")
-      .eq("id", user.id)
-      .single<{ role: "customer" | "admin" }>();
-    if (profile?.role !== "admin") redirect("/");
+  if (isSupabaseConfigured()) {
+    await requireAdmin();
   }
 
   return (

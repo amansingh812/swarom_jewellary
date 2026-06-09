@@ -23,8 +23,8 @@ export const MOCK_PRODUCTS: Product[] = [
     compare_at_price: null,
     status: "active",
     meta: "925 silver · engraved",
-    image_main: "/products/pendant.svg",
-    images: ["/products/pendant.svg", "/products/bracelet.svg", "/products/ring.svg"],
+    image_main: "/products/real-pendant.png",
+    images: ["/products/real-pendant.png", "/products/real-bracelet.png", "/products/real-ring.png"],
     options: {
       engraving: { type: "text", max: 12, label: "Engraving" },
       chain: {
@@ -51,8 +51,8 @@ export const MOCK_PRODUCTS: Product[] = [
     compare_at_price: null,
     status: "active",
     meta: "925 silver · date",
-    image_main: "/products/ring.svg",
-    images: ["/products/ring.svg", "/products/pendant.svg"],
+    image_main: "/products/real-ring.png",
+    images: ["/products/real-ring.png", "/products/real-pendant.png"],
     options: {
       engraving: { type: "text", max: 10, label: "Date or initials" },
       size: {
@@ -79,8 +79,8 @@ export const MOCK_PRODUCTS: Product[] = [
     compare_at_price: null,
     status: "active",
     meta: "925 silver · initial",
-    image_main: "/products/bracelet.svg",
-    images: ["/products/bracelet.svg", "/products/pendant.svg"],
+    image_main: "/products/real-bracelet.png",
+    images: ["/products/real-bracelet.png", "/products/real-pendant.png"],
     options: {
       engraving: { type: "text", max: 3, label: "Initial" },
       length: {
@@ -107,8 +107,8 @@ export const MOCK_PRODUCTS: Product[] = [
     compare_at_price: null,
     status: "active",
     meta: "925 silver · double",
-    image_main: "/products/pendant.svg",
-    images: ["/products/pendant.svg", "/products/bracelet.svg"],
+    image_main: "/products/real-pendant.png",
+    images: ["/products/real-pendant.png", "/products/real-bracelet.png"],
     options: {
       engraving_a: { type: "text", max: 10, label: "First name" },
       engraving_b: { type: "text", max: 10, label: "Second name" },
@@ -135,8 +135,8 @@ export const MOCK_PRODUCTS: Product[] = [
     compare_at_price: null,
     status: "active",
     meta: "925 silver · letter",
-    image_main: "/products/pendant.svg",
-    images: ["/products/pendant.svg"],
+    image_main: "/products/real-pendant.png",
+    images: ["/products/real-pendant.png"],
     options: {
       engraving: { type: "text", max: 1, label: "Letter" },
       chain: {
@@ -162,8 +162,8 @@ export const MOCK_PRODUCTS: Product[] = [
     compare_at_price: null,
     status: "active",
     meta: "925 silver · name",
-    image_main: "/products/bracelet.svg",
-    images: ["/products/bracelet.svg"],
+    image_main: "/products/real-anklet.png",
+    images: ["/products/real-anklet.png"],
     options: {
       engraving: { type: "text", max: 8, label: "Name" },
       length: {
@@ -189,8 +189,8 @@ export const MOCK_PRODUCTS: Product[] = [
     compare_at_price: null,
     status: "active",
     meta: "925 silver · pair",
-    image_main: "/products/ring.svg",
-    images: ["/products/ring.svg"],
+    image_main: "/products/real-ring.png",
+    images: ["/products/real-ring.png"],
     options: {
       engraving: { type: "text", max: 6, label: "Word or word" },
       size: {
@@ -216,8 +216,8 @@ export const MOCK_PRODUCTS: Product[] = [
     compare_at_price: null,
     status: "active",
     meta: "925 silver · locket",
-    image_main: "/products/pendant.svg",
-    images: ["/products/pendant.svg"],
+    image_main: "/products/real-pendant.png",
+    images: ["/products/real-pendant.png"],
     options: {
       engraving: { type: "text", max: 16, label: "On the back" },
       chain: {

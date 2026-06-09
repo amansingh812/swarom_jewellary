@@ -4,6 +4,7 @@ import { getProduct, getProducts } from "@/lib/products";
 import { ProductDetail } from "./ProductDetail";
 import { ProductTile } from "@/components/site/ProductTile";
 import { Eyebrow } from "@/components/ui/Eyebrow";
+import { getWishlistProductIds } from "@/app/actions/wishlist";
 
 interface PageProps {
   params: { slug: string };
@@ -22,9 +23,13 @@ export default async function ProductPage({ params }: PageProps) {
   const product = await getProduct(params.slug);
   if (!product) notFound();
 
-  // Recommendations — just other products for now.
-  const all = await getProducts({ limit: 5 });
+  // Recommendations + current user's wishlist (parallel).
+  const [all, wishlist] = await Promise.all([
+    getProducts({ limit: 5 }),
+    getWishlistProductIds(),
+  ]);
   const recs = all.filter((p) => p.id !== product.id).slice(0, 4);
+  const inWishlist = wishlist.has(product.id);
 
   return (
     <div className="mx-auto max-w-marketing px-5 pt-6 pb-32 md:px-10 md:pt-8 md:pb-24">
@@ -39,7 +44,7 @@ export default async function ProductPage({ params }: PageProps) {
         </span>
       </nav>
 
-      <ProductDetail product={product} />
+      <ProductDetail product={product} initialInWishlist={inWishlist} />
 
       {recs.length > 0 && (
         <section className="mt-20 md:mt-28">
@@ -48,7 +53,7 @@ export default async function ProductPage({ params }: PageProps) {
           </div>
           <div className="grid grid-cols-2 gap-x-4 gap-y-8 md:grid-cols-4 md:gap-x-6">
             {recs.map((p) => (
-              <ProductTile key={p.id} product={p} />
+              <ProductTile key={p.id} product={p} inWishlist={wishlist.has(p.id)} />
             ))}
           </div>
         </section>

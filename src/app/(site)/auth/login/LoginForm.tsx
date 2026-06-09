@@ -2,15 +2,23 @@
 
 import { useState, FormEvent } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { createBrowserSupabaseClient } from "@/lib/supabase/client";
 import { Button } from "@/components/ui/Button";
 import { Icon } from "@/components/ui/Icon";
 
 type Mode = "password" | "magic" | "phone-otp";
 
+function safeNext(next: string | null): string {
+  // Only allow internal next URLs (prevent open redirect).
+  if (!next || !next.startsWith("/") || next.startsWith("//")) return "/account";
+  return next;
+}
+
 export function LoginForm() {
   const router = useRouter();
+  const params = useSearchParams();
+  const next = safeNext(params.get("next"));
   const supabase = createBrowserSupabaseClient();
   const [mode, setMode] = useState<Mode>("password");
   const [email, setEmail] = useState("");
@@ -29,12 +37,14 @@ export function LoginForm() {
       if (mode === "password") {
         const { error } = await supabase.auth.signInWithPassword({ email, password });
         if (error) throw error;
-        router.push("/account");
+        router.push(next);
         router.refresh();
       } else if (mode === "magic") {
         const { error } = await supabase.auth.signInWithOtp({
           email,
-          options: { emailRedirectTo: `${location.origin}/auth/callback` },
+          options: {
+            emailRedirectTo: `${location.origin}/auth/callback?next=${encodeURIComponent(next)}`,
+          },
         });
         if (error) throw error;
         setMessage({ kind: "ok", text: "Check your inbox — we sent you a sign-in link." });
@@ -69,7 +79,9 @@ export function LoginForm() {
     try {
       const { error } = await supabase.auth.signInWithOAuth({
         provider: "google",
-        options: { redirectTo: `${location.origin}/auth/callback` },
+        options: {
+          redirectTo: `${location.origin}/auth/callback?next=${encodeURIComponent(next)}`,
+        },
       });
       if (error) throw error;
     } catch (err: unknown) {

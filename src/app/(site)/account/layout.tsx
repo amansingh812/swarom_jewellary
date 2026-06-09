@@ -1,8 +1,8 @@
-import Link from "next/link";
-import { redirect } from "next/navigation";
-import { createServerSupabaseClient } from "@/lib/supabase/server";
 import { AccountNav } from "./AccountNav";
 import { SignOutButton } from "./SignOutButton";
+import { getServerUser, getProfile } from "@/lib/auth/server";
+import { isSupabaseConfigured } from "@/lib/supabase/server";
+import { redirect } from "next/navigation";
 
 // Account pages read user session cookies — never prerender.
 export const dynamic = "force-dynamic";
@@ -12,22 +12,18 @@ export default async function AccountLayout({
 }: {
   children: React.ReactNode;
 }) {
-  // Server-side auth gate. Skipped if Supabase isn't configured (dev-friendly).
-  const configured =
-    process.env.NEXT_PUBLIC_SUPABASE_URL &&
-    !process.env.NEXT_PUBLIC_SUPABASE_URL.includes("YOUR-PROJECT");
-
   let userEmail: string | null = null;
   let fullName: string | null = null;
 
-  if (configured) {
-    const supabase = createServerSupabaseClient();
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
+  if (isSupabaseConfigured()) {
+    const user = await getServerUser();
     if (!user) redirect("/auth/login?next=/account");
+    const profile = await getProfile();
     userEmail = user.email ?? null;
-    fullName = (user.user_metadata?.full_name as string) ?? null;
+    fullName =
+      profile?.full_name ??
+      (user.user_metadata?.full_name as string | undefined) ??
+      null;
   } else {
     userEmail = "you@swarom.in";
     fullName = "Friend";

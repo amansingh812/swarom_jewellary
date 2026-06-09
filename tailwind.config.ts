@@ -16,9 +16,11 @@ const config: Config = {
           200: "#EDE3D4",
         },
         charcoal: {
-          DEFAULT: "#1F1B16",
-          800: "#2A241D",
-          700: "#3A332A",
+          // Softened from near-black to warm dark brown for a gentler
+          // read against cream paper.
+          DEFAULT: "#2E2A24",
+          800: "#3A332A",
+          700: "#4A4239",
         },
         silver: {
           DEFAULT: "#C9C7C2",
@@ -49,10 +51,10 @@ const config: Config = {
         xl: "24px",
       },
       boxShadow: {
-        hairline: "0 0 0 1px rgba(31, 27, 22, 0.15)",
-        soft: "0 1px 2px rgba(31,27,22,0.04), 0 8px 24px rgba(31,27,22,0.06)",
-        card: "0 1px 3px rgba(31,27,22,0.06), 0 12px 40px rgba(31,27,22,0.08)",
-        lift: "0 4px 12px rgba(31,27,22,0.08), 0 24px 60px rgba(31,27,22,0.12)",
+        hairline: "0 0 0 1px rgba(46, 42, 36, 0.15)",
+        soft: "0 1px 2px rgba(46,42,36,0.04), 0 8px 24px rgba(46,42,36,0.06)",
+        card: "0 1px 3px rgba(46,42,36,0.06), 0 12px 40px rgba(46,42,36,0.08)",
+        lift: "0 4px 12px rgba(46,42,36,0.08), 0 24px 60px rgba(46,42,36,0.12)",
       },
       transitionTimingFunction: {
         out: "cubic-bezier(0.22, 0.61, 0.36, 1)",

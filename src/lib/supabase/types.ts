@@ -1,7 +1,10 @@
 /**
- * Database types — hand-rolled stub matching `supabase/schema.sql`.
- * Once the schema is live in Supabase, regenerate with:
+ * Database types — hand-rolled to match `supabase/schema.sql`.
+ * Once the schema is live in Supabase, you can regenerate with:
  *   npx supabase gen types typescript --project-id <id> > src/lib/supabase/types.ts
+ *
+ * Each table is declared with three concrete shapes so the typed Supabase
+ * client picks up Row / Insert / Update without falling through to `never`.
  */
 
 export type Json =
@@ -12,175 +15,200 @@ export type Json =
   | { [key: string]: Json | undefined }
   | Json[];
 
+/* ─── Row shapes (what comes back from SELECT) ─────────────── */
+
+export interface ProfileRow {
+  id: string;
+  full_name: string | null;
+  phone: string | null;
+  role: "customer" | "admin";
+  created_at: string;
+}
+
+export interface CollectionRow {
+  id: string;
+  slug: string;
+  name: string;
+  description: string | null;
+  position: number;
+  created_at: string;
+}
+
+export interface ProductRow {
+  id: string;
+  slug: string;
+  name: string;
+  modifier: string | null;
+  description: string | null;
+  collection_id: string | null;
+  category: "pendant" | "ring" | "bracelet" | "anklet" | "for-two";
+  price: number;                // rupees
+  compare_at_price: number | null;
+  status: "draft" | "active" | "archived";
+  meta: string | null;          // "925 silver · engraved"
+  image_main: string | null;
+  images: string[];
+  options: Json;                // engraving / chain length schema
+  inventory: number | null;     // null = made-to-order
+  created_at: string;
+  updated_at: string;
+}
+
+export interface AddressRow {
+  id: string;
+  user_id: string;
+  full_name: string;
+  phone: string;
+  line1: string;
+  line2: string | null;
+  city: string;
+  state: string;
+  pincode: string;
+  country: string;
+  is_default: boolean;
+  created_at: string;
+}
+
+export interface OrderRow {
+  id: string;
+  user_id: string | null;
+  email: string;
+  phone: string | null;
+  status:
+    | "pending"
+    | "paid"
+    | "in_production"
+    | "shipped"
+    | "delivered"
+    | "cancelled"
+    | "refunded";
+  subtotal: number;
+  shipping: number;
+  tax: number;
+  total: number;
+  currency: string;
+  shipping_address: Json;
+  razorpay_order_id: string | null;
+  razorpay_payment_id: string | null;
+  notes: string | null;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface OrderItemRow {
+  id: string;
+  order_id: string;
+  product_id: string;
+  name: string;
+  modifier: string | null;
+  image: string | null;
+  unit_price: number;
+  quantity: number;
+  options: Json;
+}
+
+export interface WishlistRow {
+  id: string;
+  user_id: string;
+  product_id: string;
+  created_at: string;
+}
+
+export interface ReviewRow {
+  id: string;
+  product_id: string;
+  user_id: string;
+  rating: number;
+  title: string | null;
+  body: string | null;
+  approved: boolean;
+  created_at: string;
+}
+
+export interface NewsletterRow {
+  id: string;
+  email: string;
+  source: string | null;
+  created_at: string;
+}
+
+/* ─── Database surface ───────────────────────────────────── */
+
 export interface Database {
   public: {
     Tables: {
       profiles: {
-        Row: {
-          id: string;
-          full_name: string | null;
-          phone: string | null;
-          role: "customer" | "admin";
-          created_at: string;
-        };
-        Insert: Partial<Database["public"]["Tables"]["profiles"]["Row"]> & {
-          id: string;
-        };
-        Update: Partial<Database["public"]["Tables"]["profiles"]["Row"]>;
+        Row: ProfileRow;
+        Insert: { id: string } & Partial<Omit<ProfileRow, "id">>;
+        Update: Partial<Omit<ProfileRow, "id">>;
       };
       collections: {
-        Row: {
-          id: string;
-          slug: string;
-          name: string;
-          description: string | null;
-          position: number;
-          created_at: string;
-        };
-        Insert: Omit<
-          Database["public"]["Tables"]["collections"]["Row"],
-          "id" | "created_at"
-        > & { id?: string; created_at?: string };
-        Update: Partial<Database["public"]["Tables"]["collections"]["Row"]>;
+        Row: CollectionRow;
+        Insert: { slug: string; name: string } & Partial<Omit<CollectionRow, "slug" | "name">>;
+        Update: Partial<Omit<CollectionRow, "id">>;
       };
       products: {
-        Row: {
-          id: string;
+        Row: ProductRow;
+        Insert: {
           slug: string;
           name: string;
-          modifier: string | null;
-          description: string | null;
-          collection_id: string | null;
-          category: "pendant" | "ring" | "bracelet" | "anklet" | "for-two";
-          price: number;          // rupees
-          compare_at_price: number | null;
-          status: "draft" | "active" | "archived";
-          meta: string | null;    // "925 silver · engraved"
-          image_main: string | null;
-          images: string[];
-          options: Json;          // schema for engraving / chain length etc
-          inventory: number | null; // null = made-to-order, no cap
-          created_at: string;
-          updated_at: string;
-        };
-        Insert: Omit<
-          Database["public"]["Tables"]["products"]["Row"],
-          "id" | "created_at" | "updated_at"
-        > & { id?: string };
-        Update: Partial<Database["public"]["Tables"]["products"]["Row"]>;
+          category: ProductRow["category"];
+          price: number;
+        } & Partial<Omit<ProductRow, "slug" | "name" | "category" | "price">>;
+        Update: Partial<Omit<ProductRow, "id">>;
       };
       addresses: {
-        Row: {
-          id: string;
+        Row: AddressRow;
+        Insert: {
           user_id: string;
           full_name: string;
           phone: string;
           line1: string;
-          line2: string | null;
           city: string;
           state: string;
           pincode: string;
-          country: string;
-          is_default: boolean;
-          created_at: string;
-        };
-        Insert: Omit<
-          Database["public"]["Tables"]["addresses"]["Row"],
-          "id" | "created_at"
-        > & { id?: string };
-        Update: Partial<Database["public"]["Tables"]["addresses"]["Row"]>;
+        } & Partial<Omit<AddressRow, "user_id" | "full_name" | "phone" | "line1" | "city" | "state" | "pincode">>;
+        Update: Partial<Omit<AddressRow, "id">>;
       };
       orders: {
-        Row: {
-          id: string;
-          user_id: string | null;
+        Row: OrderRow;
+        Insert: {
           email: string;
-          phone: string | null;
-          status:
-            | "pending"
-            | "paid"
-            | "in_production"
-            | "shipped"
-            | "delivered"
-            | "cancelled"
-            | "refunded";
           subtotal: number;
-          shipping: number;
-          tax: number;
           total: number;
-          currency: string;
           shipping_address: Json;
-          razorpay_order_id: string | null;
-          razorpay_payment_id: string | null;
-          notes: string | null;
-          created_at: string;
-          updated_at: string;
-        };
-        Insert: Omit<
-          Database["public"]["Tables"]["orders"]["Row"],
-          "id" | "created_at" | "updated_at"
-        > & { id?: string };
-        Update: Partial<Database["public"]["Tables"]["orders"]["Row"]>;
+        } & Partial<Omit<OrderRow, "email" | "subtotal" | "total" | "shipping_address">>;
+        Update: Partial<Omit<OrderRow, "id">>;
       };
       order_items: {
-        Row: {
-          id: string;
+        Row: OrderItemRow;
+        Insert: {
           order_id: string;
           product_id: string;
           name: string;
-          modifier: string | null;
-          image: string | null;
           unit_price: number;
           quantity: number;
-          options: Json;          // engraving + chain length
-        };
-        Insert: Omit<Database["public"]["Tables"]["order_items"]["Row"], "id"> & {
-          id?: string;
-        };
-        Update: Partial<Database["public"]["Tables"]["order_items"]["Row"]>;
+        } & Partial<Omit<OrderItemRow, "order_id" | "product_id" | "name" | "unit_price" | "quantity">>;
+        Update: Partial<Omit<OrderItemRow, "id">>;
       };
       wishlist: {
-        Row: {
-          id: string;
-          user_id: string;
-          product_id: string;
-          created_at: string;
-        };
-        Insert: Omit<
-          Database["public"]["Tables"]["wishlist"]["Row"],
-          "id" | "created_at"
-        > & { id?: string };
-        Update: Partial<Database["public"]["Tables"]["wishlist"]["Row"]>;
+        Row: WishlistRow;
+        Insert: { user_id: string; product_id: string } & Partial<Omit<WishlistRow, "user_id" | "product_id">>;
+        Update: Partial<Omit<WishlistRow, "id">>;
       };
       reviews: {
-        Row: {
-          id: string;
+        Row: ReviewRow;
+        Insert: {
           product_id: string;
           user_id: string;
           rating: number;
-          title: string | null;
-          body: string | null;
-          approved: boolean;
-          created_at: string;
-        };
-        Insert: Omit<
-          Database["public"]["Tables"]["reviews"]["Row"],
-          "id" | "created_at"
-        > & { id?: string };
-        Update: Partial<Database["public"]["Tables"]["reviews"]["Row"]>;
+        } & Partial<Omit<ReviewRow, "product_id" | "user_id" | "rating">>;
+        Update: Partial<Omit<ReviewRow, "id">>;
       };
       newsletter: {
-        Row: {
-          id: string;
-          email: string;
-          source: string | null;
-          created_at: string;
-        };
-        Insert: Omit<
-          Database["public"]["Tables"]["newsletter"]["Row"],
-          "id" | "created_at"
-        > & { id?: string };
-        Update: Partial<Database["public"]["Tables"]["newsletter"]["Row"]>;
+        Row: NewsletterRow;
+        Insert: { email: string } & Partial<Omit<NewsletterRow, "email">>;
+        Update: Partial<Omit<NewsletterRow, "id">>;
       };
     };
     Views: Record<string, never>;
@@ -189,10 +217,10 @@ export interface Database {
   };
 }
 
-// Convenience aliases
-export type Product = Database["public"]["Tables"]["products"]["Row"];
-export type Collection = Database["public"]["Tables"]["collections"]["Row"];
-export type Order = Database["public"]["Tables"]["orders"]["Row"];
-export type OrderItem = Database["public"]["Tables"]["order_items"]["Row"];
-export type Address = Database["public"]["Tables"]["addresses"]["Row"];
-export type Profile = Database["public"]["Tables"]["profiles"]["Row"];
+/* ─── Convenience aliases (used throughout the app) ──────── */
+export type Product = ProductRow;
+export type Collection = CollectionRow;
+export type Order = OrderRow;
+export type OrderItem = OrderItemRow;
+export type Address = AddressRow;
+export type Profile = ProfileRow;

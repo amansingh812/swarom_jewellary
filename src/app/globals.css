@@ -10,9 +10,11 @@
   --cream:        #F6F1EA;
   --cream-50:     #FBF8F4;
   --cream-200:    #EDE3D4;
-  --charcoal:     #1F1B16;
-  --charcoal-800: #2A241D;
-  --charcoal-700: #3A332A;
+  /* Softened from near-black #1F1B16 → warm dark brown #2E2A24 to feel
+     gentler against the cream paper (matches the Mentis reference). */
+  --charcoal:     #2E2A24;
+  --charcoal-800: #3A332A;
+  --charcoal-700: #4A4239;
   --silver:       #C9C7C2;
   --silver-light: #E6E4DF;
   --silver-dark:  #9A9893;
@@ -23,12 +25,12 @@
 
   --bg:        var(--cream);
   --fg1:       var(--charcoal);
-  --fg2:       rgba(31, 27, 22, 0.80);
-  --fg3:       rgba(31, 27, 22, 0.65);
-  --fg4:       rgba(31, 27, 22, 0.50);
-  --fg5:       rgba(31, 27, 22, 0.30);
-  --hairline:        rgba(31, 27, 22, 0.15);
-  --hairline-strong: rgba(31, 27, 22, 0.40);
+  --fg2:       rgba(46, 42, 36, 0.80);
+  --fg3:       rgba(46, 42, 36, 0.65);
+  --fg4:       rgba(46, 42, 36, 0.50);
+  --fg5:       rgba(46, 42, 36, 0.30);
+  --hairline:        rgba(46, 42, 36, 0.15);
+  --hairline-strong: rgba(46, 42, 36, 0.40);
 
   --ease-out:    cubic-bezier(0.22, 0.61, 0.36, 1);
   --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);

@@ -8,10 +8,12 @@ import { Button } from "@/components/ui/Button";
 import { Pill } from "@/components/ui/Pill";
 import { useCart } from "@/lib/cart/CartProvider";
 import { formatINR } from "@/lib/money";
+import { WishlistButton } from "@/components/site/WishlistButton";
 import type { Product } from "@/lib/supabase/types";
 
 interface ProductDetailProps {
   product: Product;
+  initialInWishlist?: boolean;
 }
 
 interface OptionSpec {
@@ -22,7 +24,7 @@ interface OptionSpec {
   default?: string;
 }
 
-export function ProductDetail({ product }: ProductDetailProps) {
+export function ProductDetail({ product, initialInWishlist = false }: ProductDetailProps) {
   const opts = (product.options ?? {}) as unknown as Record<string, OptionSpec>;
 
   // Initialize state for every option declared on the product.
@@ -172,9 +174,17 @@ export function ProductDetail({ product }: ProductDetailProps) {
 
           {/* CTA row (desktop) */}
           <div className="hidden md:flex flex-col gap-3 mt-3">
-            <Button onClick={addToBag} variant="primary" size="lg" block disabled={adding}>
-              {adding ? "Adding…" : `Add to bag — ${formatINR(product.price)}`}
-            </Button>
+            <div className="flex gap-2">
+              <Button onClick={addToBag} variant="primary" size="lg" block disabled={adding} className="flex-1">
+                {adding ? "Adding…" : `Add to bag — ${formatINR(product.price)}`}
+              </Button>
+              <WishlistButton
+                productId={product.id}
+                initialInWishlist={initialInWishlist}
+                variant="pdp"
+                redirectAfter={`/product/${product.slug}`}
+              />
+            </div>
             <a
               href={`https://wa.me/919999999999?text=Hi%20Swarom%2C%20I%27d%20like%20to%20ask%20about%20${encodeURIComponent(product.name + " " + (product.modifier ?? ""))}`}
               target="_blank"

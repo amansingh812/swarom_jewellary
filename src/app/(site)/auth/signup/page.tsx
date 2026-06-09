@@ -2,6 +2,9 @@ import { SignupForm } from "./SignupForm";
 import { Eyebrow } from "@/components/ui/Eyebrow";
 import { ShimmerLine } from "@/components/ui/ShimmerLine";
 
+// Reads ?next= from the URL — never prerender.
+export const dynamic = "force-dynamic";
+
 export const metadata = {
   title: "Create an account",
 };

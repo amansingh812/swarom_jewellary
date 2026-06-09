@@ -1,6 +1,5 @@
 import { createServerClient, type CookieOptions } from "@supabase/ssr";
 import { cookies } from "next/headers";
-import type { Database } from "./types";
 
 const PLACEHOLDER_URL = "https://placeholder.supabase.co";
 const PLACEHOLDER_KEY = "placeholder-anon-key";
@@ -15,7 +14,7 @@ const PLACEHOLDER_KEY = "placeholder-anon-key";
  */
 export function createServerSupabaseClient() {
   const cookieStore = cookies();
-  return createServerClient<Database>(
+  return createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL || PLACEHOLDER_URL,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || PLACEHOLDER_KEY,
     {
@@ -48,7 +47,7 @@ export function createServerSupabaseClient() {
  * NEVER use this in code that ships to the browser.
  */
 export function createAdminSupabaseClient() {
-  return createServerClient<Database>(
+  return createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL || PLACEHOLDER_URL,
     process.env.SUPABASE_SERVICE_ROLE_KEY || PLACEHOLDER_KEY,
     {
@@ -68,6 +67,7 @@ export function isSupabaseConfigured(): boolean {
   return Boolean(
     process.env.NEXT_PUBLIC_SUPABASE_URL &&
       process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY &&
-      !process.env.NEXT_PUBLIC_SUPABASE_URL.includes("YOUR-PROJECT")
+      !process.env.NEXT_PUBLIC_SUPABASE_URL.includes("YOUR-PROJECT") &&
+      !process.env.NEXT_PUBLIC_SUPABASE_URL.includes("placeholder")
   );
 }

@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { createServerSupabaseClient } from "@/lib/supabase/server";
 import { Eyebrow } from "@/components/ui/Eyebrow";
-import { Button, ButtonLink } from "@/components/ui/Button";
+import { ButtonLink } from "@/components/ui/Button";
 import { formatINR } from "@/lib/money";
 
 export default async function AdminProductsPage() {
@@ -108,9 +108,9 @@ function Empty() {
         Run <code>supabase/seed.sql</code> to load the starter set, or add a
         piece by hand.
       </p>
-      <Button variant="primary" className="mt-2">
+      <ButtonLink href="/admin/products/new" variant="primary" className="mt-2">
         + New piece
-      </Button>
+      </ButtonLink>
     </div>
   );
 }

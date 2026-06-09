@@ -1,27 +1,29 @@
 "use client";
 
 import Link from "next/link";
-import { FormEvent, useState } from "react";
+import { FormEvent, useState, useTransition } from "react";
 import { Icon } from "@/components/ui/Icon";
 import { ShimmerLine } from "@/components/ui/ShimmerLine";
+import { subscribeNewsletter } from "@/app/actions/newsletter";
 
 export function Footer() {
   const [email, setEmail] = useState("");
   const [done, setDone] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [pending, startTransition] = useTransition();
 
   function onSubmit(e: FormEvent) {
     e.preventDefault();
-    if (!email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) return;
-    // TODO: POST /api/newsletter once Supabase is wired.
-    try {
-      const list = JSON.parse(localStorage.getItem("swarom_newsletter") ?? "[]");
-      if (!list.includes(email)) list.push(email);
-      localStorage.setItem("swarom_newsletter", JSON.stringify(list));
-    } catch {
-      /* ignored */
-    }
-    setDone(true);
-    setEmail("");
+    setError(null);
+    startTransition(async () => {
+      const res = await subscribeNewsletter(email, "footer");
+      if (res.ok) {
+        setDone(true);
+        setEmail("");
+      } else {
+        setError(res.message);
+      }
+    });
   }
 
   return (
@@ -76,15 +78,18 @@ export function Footer() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="your@email.com"
-                  className="rounded-pill border border-[var(--hairline)] bg-cream-50 px-4 py-2.5 font-sans text-[12px] text-charcoal placeholder:text-charcoal/40 outline-none focus:border-charcoal"
+                  disabled={pending}
+                  className="rounded-pill border border-[var(--hairline)] bg-cream-50 px-4 py-2.5 font-sans text-[12px] text-charcoal placeholder:text-charcoal/40 outline-none focus:border-charcoal disabled:opacity-50"
                   aria-label="Email"
                 />
                 <button
                   type="submit"
-                  className="rounded-pill bg-charcoal px-4 py-2.5 font-sans text-[11px] font-medium tracking-wider text-cream hover:bg-charcoal-800"
+                  disabled={pending}
+                  className="rounded-pill bg-charcoal px-4 py-2.5 font-sans text-[11px] font-medium tracking-wider text-cream hover:bg-charcoal-800 disabled:opacity-50"
                 >
-                  Notify me
+                  {pending ? "Adding…" : "Notify me"}
                 </button>
+                {error && <p className="swr-meta text-oxide">{error}</p>}
               </form>
             )}
           </FooterCol>

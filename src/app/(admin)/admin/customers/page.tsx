@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { createServerSupabaseClient } from "@/lib/supabase/server";
 import { Eyebrow } from "@/components/ui/Eyebrow";
 
@@ -39,8 +40,12 @@ export default async function AdminCustomersPage() {
             </thead>
             <tbody>
               {customers.map((c) => (
-                <tr key={c.id} className="border-b border-[var(--hairline)] last:border-b-0">
-                  <Td>{c.full_name || <span className="text-charcoal/40 italic">no name</span>}</Td>
+                <tr key={c.id} className="border-b border-[var(--hairline)] last:border-b-0 hover:bg-cream-200/40 transition-colors">
+                  <Td>
+                    <Link href={`/admin/customers/${c.id}`} className="hover:text-gold">
+                      {c.full_name || <span className="text-charcoal/40 italic">no name</span>}
+                    </Link>
+                  </Td>
                   <Td>{c.phone || "—"}</Td>
                   <Td>
                     <span className={`swr-meta rounded-pill px-2 py-1 ${c.role === "admin" ? "bg-gold/15 text-charcoal" : "bg-cream-200"}`}>
