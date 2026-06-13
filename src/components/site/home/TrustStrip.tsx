@@ -30,22 +30,18 @@ const BADGES: Badge[] = [
  */
 export function TrustStrip() {
   return (
-    <section className="border-y border-[var(--hairline)] py-10 md:py-14 bg-cream">
-      <div className="mx-auto max-w-marketing px-5 md:px-10">
-        <div className="grid grid-cols-1 gap-8 md:grid-cols-3 md:gap-10">
+    <section className="border-y border-silver/40 py-12 md:py-16 bg-cream">
+      <div className="mx-auto max-w-marketing px-6 md:px-20">
+        <div className="grid grid-cols-1 gap-10 md:grid-cols-3 md:gap-12">
           {BADGES.map((b) => (
-            <div key={b.title} className="flex items-start gap-4">
-              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-[var(--hairline-strong)] text-charcoal">
-                <Icon name={b.icon} size={16} />
+            <div key={b.title} className="flex flex-col items-center gap-3 text-center">
+              <span className="text-gold" aria-hidden>
+                <Icon name={b.icon} size={22} />
               </span>
-              <div className="flex flex-col gap-1">
-                <h3 className="font-serif font-medium text-[16px] text-charcoal">
-                  {b.title}
-                </h3>
-                <p className="font-sans text-[13px] leading-relaxed text-charcoal/65 max-w-[280px]">
-                  {b.body}
-                </p>
-              </div>
+              <h3 className="swr-eyebrow !text-charcoal">{b.title}</h3>
+              <p className="font-sans text-[13px] leading-relaxed text-charcoal-700 max-w-[280px] m-0">
+                {b.body}
+              </p>
             </div>
           ))}
         </div>

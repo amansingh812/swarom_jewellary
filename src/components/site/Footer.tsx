@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { FormEvent, useState, useTransition } from "react";
 import { Icon } from "@/components/ui/Icon";
-import { ShimmerLine } from "@/components/ui/ShimmerLine";
 import { subscribeNewsletter } from "@/app/actions/newsletter";
 
 export function Footer() {
@@ -27,15 +26,17 @@ export function Footer() {
   }
 
   return (
-    <footer className="bg-cream-200 border-t border-[var(--hairline)] relative z-[2]">
-      <div className="mx-auto max-w-marketing grid grid-cols-1 gap-10 px-5 py-12 md:grid-cols-[4fr_8fr] md:gap-16 md:px-10 md:py-16">
+    <footer className="bg-charcoal text-cream relative z-[2]">
+      <div className="mx-auto max-w-marketing grid grid-cols-1 gap-12 px-6 py-16 md:grid-cols-[4fr_8fr] md:gap-16 md:px-20 md:py-20">
         {/* Brand block */}
         <div className="flex flex-col">
-          <div className="font-serif text-[36px] leading-none text-charcoal">Swarom</div>
-          <p className="swr-tagline mt-3 max-w-[280px]">
+          <div className="font-serif text-[28px] uppercase tracking-widest leading-none text-cream">
+            Swarom
+          </div>
+          <p className="font-serif italic text-[17px] leading-relaxed mt-4 max-w-[300px] text-cream/70">
             Personalized 925 sterling silver, handcrafted in Bengaluru.
           </p>
-          <ShimmerLine className="mt-4" />
+          <div className="mt-6 h-px w-24 bg-gold-soft/60" aria-hidden />
         </div>
 
         {/* Columns */}
@@ -65,13 +66,13 @@ export function Footer() {
             </FooterLink>
           </FooterCol>
           <FooterCol label="Newsletter">
-            <p className="font-sans text-[12px] leading-relaxed text-charcoal/65 mb-2 max-w-[220px]">
+            <p className="font-sans text-[13px] leading-relaxed text-cream/60 mb-3 max-w-[220px]">
               One quiet letter each month. New pieces, behind the bench.
             </p>
             {done ? (
-              <p className="swr-meta text-moss">You&apos;re on the list.</p>
+              <p className="swr-meta !text-gold-soft">You&apos;re on the list.</p>
             ) : (
-              <form className="flex flex-col gap-2" onSubmit={onSubmit}>
+              <form className="flex flex-col gap-3" onSubmit={onSubmit}>
                 <input
                   type="email"
                   required
@@ -79,32 +80,34 @@ export function Footer() {
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="your@email.com"
                   disabled={pending}
-                  className="rounded-pill border border-[var(--hairline)] bg-cream-50 px-4 py-2.5 font-sans text-[12px] text-charcoal placeholder:text-charcoal/40 outline-none focus:border-charcoal disabled:opacity-50"
+                  className="border-b border-cream/30 bg-transparent px-0 py-2.5 font-sans text-[13px] text-cream placeholder:text-cream/40 outline-none focus:border-gold-soft disabled:opacity-50 transition-colors"
                   aria-label="Email"
                 />
                 <button
                   type="submit"
                   disabled={pending}
-                  className="rounded-pill bg-charcoal px-4 py-2.5 font-sans text-[11px] font-medium tracking-wider text-cream hover:bg-charcoal-800 disabled:opacity-50"
+                  className="self-start font-sans text-[11px] font-semibold uppercase tracking-widest text-gold-soft swr-underline-anim disabled:opacity-50"
                 >
-                  {pending ? "Adding…" : "Notify me"}
+                  {pending ? "Adding…" : "Subscribe"}
                 </button>
-                {error && <p className="swr-meta text-oxide">{error}</p>}
+                {error && <p className="swr-meta !text-[#FFB4AB]">{error}</p>}
               </form>
             )}
           </FooterCol>
         </div>
       </div>
 
-      <div className="mx-auto max-w-marketing flex flex-col gap-3 px-5 py-5 border-t border-[var(--hairline)] md:flex-row md:items-center md:justify-between md:px-10">
-        <span className="swr-meta">© 2026 Swarom</span>
-        <span className="swr-hairline-rule swr-meta">
-          <em className="not-italic">Bengaluru · Est. 2026</em>
-        </span>
+      <div className="mx-auto max-w-marketing flex flex-col gap-3 px-6 py-6 border-t border-cream/15 md:flex-row md:items-center md:justify-between md:px-20">
+        <span className="swr-meta !text-cream/50">© 2026 Swarom</span>
+        <span className="swr-meta !text-cream/50">Bengaluru · Est. 2026</span>
         <div className="flex items-center gap-4">
-          <Link href="/privacy" className="swr-meta hover:text-charcoal">Privacy</Link>
-          <span aria-hidden className="text-charcoal/30">·</span>
-          <Link href="/terms" className="swr-meta hover:text-charcoal">Terms</Link>
+          <Link href="/privacy" className="swr-meta !text-cream/50 hover:!text-gold-soft transition-colors">
+            Privacy
+          </Link>
+          <span aria-hidden className="text-cream/30">·</span>
+          <Link href="/terms" className="swr-meta !text-cream/50 hover:!text-gold-soft transition-colors">
+            Terms
+          </Link>
         </div>
       </div>
     </footer>
@@ -113,8 +116,8 @@ export function Footer() {
 
 function FooterCol({ label, children }: { label: string; children: React.ReactNode }) {
   return (
-    <div className="flex flex-col gap-2.5">
-      <span className="font-sans text-[10px] font-semibold uppercase tracking-widest text-charcoal mb-1">
+    <div className="flex flex-col gap-3">
+      <span className="font-sans text-[11px] font-semibold uppercase tracking-widest text-gold-soft mb-2">
         {label}
       </span>
       {children}
@@ -132,7 +135,7 @@ function FooterLink({
   children: React.ReactNode;
 }) {
   const cls =
-    "font-sans text-[13px] text-charcoal/65 hover:text-charcoal flex items-center gap-2 transition-colors";
+    "font-sans text-[13px] text-cream/65 hover:text-gold-soft flex items-center gap-2 transition-colors duration-300";
   if (external) {
     return (
       <a href={href} className={cls} target="_blank" rel="noopener noreferrer">

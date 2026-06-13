@@ -58,7 +58,7 @@ export default async function OrdersPage() {
             className="rounded-xl border border-[var(--hairline)] bg-cream-50 p-5 md:p-6 grid grid-cols-[1fr_auto] gap-4 items-center"
           >
             <div className="flex flex-col gap-1">
-              <span className="font-mono text-[12px] text-charcoal/55">
+              <span className="font-sans tracking-wider text-[12px] text-charcoal/55">
                 #{o.id.slice(0, 8)}
               </span>
               <span className="font-serif text-[16px] text-charcoal">

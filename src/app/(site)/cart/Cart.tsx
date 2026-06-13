@@ -44,8 +44,8 @@ export function Cart() {
       <header className="flex items-baseline justify-between mb-8 md:mb-12">
         <h1 className="swr-h1">
           Your bag{" "}
-          <span className="font-mono text-[14px] text-charcoal/40 align-middle">
-            / {count} /
+          <span className="swr-meta !text-gold align-middle ml-2">
+            {count} item{count === 1 ? "" : "s"}
           </span>
         </h1>
       </header>
@@ -60,7 +60,7 @@ export function Cart() {
             >
               <Link
                 href={`/product/${line.slug}`}
-                className="rounded-md overflow-hidden bg-cream-200 aspect-[4/5] w-20 md:w-[120px]"
+                className="overflow-hidden bg-cream-200 aspect-[4/5] w-20 md:w-[120px]"
               >
                 <Image
                   src={line.image}
@@ -98,7 +98,7 @@ export function Cart() {
                   >
                     <Icon name="minus" size={10} />
                   </button>
-                  <span className="font-mono text-[13px] text-charcoal w-6 text-center">
+                  <span className="font-sans text-[13px] text-charcoal w-6 text-center">
                     {line.quantity}
                   </span>
                   <button

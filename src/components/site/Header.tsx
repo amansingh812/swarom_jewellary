@@ -38,23 +38,23 @@ export function Header() {
   return (
     <>
       <header
-        className={`sticky top-0 z-40 transition-colors duration-200 ease-out ${
+        className={`sticky top-0 z-40 transition-colors duration-300 ease-out ${
           scrolled
-            ? "bg-cream/95 backdrop-blur-sm border-b border-[var(--hairline)]"
+            ? "bg-cream/80 backdrop-blur-md border-b border-silver/30"
             : "bg-cream border-b border-transparent"
         }`}
       >
-        {/* Eyebrow announcement strip — visually rich on desktop, scrollable on mobile */}
+        {/* Announcement strip */}
         <div className="bg-charcoal text-cream">
           <div className="mx-auto flex max-w-marketing items-center justify-center gap-3 overflow-x-auto px-4 py-2 no-scrollbar sm:gap-4 sm:px-6">
             <span className="swr-meta whitespace-nowrap text-cream/90">
               Free shipping across India
             </span>
-            <span aria-hidden className="text-cream/40">·</span>
+            <span aria-hidden className="text-gold-soft/60">·</span>
             <span className="swr-meta whitespace-nowrap text-cream/90">
               Made to order in Bengaluru
             </span>
-            <span aria-hidden className="text-cream/40 hidden sm:inline">·</span>
+            <span aria-hidden className="text-gold-soft/60 hidden sm:inline">·</span>
             <span className="swr-meta whitespace-nowrap text-cream/90 hidden sm:inline">
               30-day returns
             </span>
@@ -62,9 +62,9 @@ export function Header() {
         </div>
 
         {/* Main row */}
-        <div className="mx-auto grid max-w-marketing grid-cols-[auto_1fr_auto] items-center gap-4 px-4 py-3 md:grid-cols-[1fr_auto_1fr] md:px-10 md:py-4">
+        <div className="mx-auto grid max-w-marketing grid-cols-[auto_1fr_auto] items-center gap-4 px-4 py-4 md:grid-cols-[1fr_auto_1fr] md:px-10 md:py-6">
           {/* Left: hamburger (mobile) / nav links (desktop) */}
-          <div className="flex items-center md:gap-7">
+          <div className="flex items-center md:gap-8">
             <button
               type="button"
               aria-label="Open menu"
@@ -73,15 +73,17 @@ export function Header() {
             >
               <Icon name="menu" size={18} />
             </button>
-            <nav className="hidden md:flex md:gap-7">
+            <nav className="hidden md:flex md:gap-8">
               {LINKS.map((l) => {
                 const active = pathname === l.href || pathname.startsWith(l.href + "/");
                 return (
                   <Link
                     key={l.href}
                     href={l.href}
-                    className={`swr-meta transition-colors hover:text-gold ${
-                      active ? "text-gold" : "text-charcoal"
+                    className={`swr-eyebrow pb-1 transition-colors duration-300 ${
+                      active
+                        ? "text-gold border-b border-gold"
+                        : "text-charcoal-700 border-b border-transparent hover:text-gold"
                     }`}
                   >
                     {l.label}
@@ -94,25 +96,25 @@ export function Header() {
           {/* Center: wordmark */}
           <Link
             href="/"
-            className="font-serif text-[26px] leading-none tracking-tight text-charcoal md:text-[32px] mx-auto"
+            className="font-serif text-[24px] uppercase leading-none tracking-widest text-charcoal md:text-[28px] mx-auto transition-all duration-500"
             aria-label="Swarom — Home"
           >
             Swarom
           </Link>
 
           {/* Right: icons */}
-          <div className="flex items-center justify-end gap-3 md:gap-5">
+          <div className="flex items-center justify-end gap-3 md:gap-6">
             <Link
               href="/shop"
               aria-label="Search"
-              className="hidden h-10 w-10 items-center justify-center md:flex hover:opacity-70"
+              className="hidden h-10 w-10 items-center justify-center md:flex text-charcoal-700 transition-opacity duration-300 hover:opacity-70"
             >
               <Icon name="search" size={16} />
             </Link>
             <Link
               href="/account"
               aria-label="Account"
-              className="hidden h-10 w-10 items-center justify-center md:flex hover:opacity-70"
+              className="hidden h-10 w-10 items-center justify-center md:flex text-charcoal-700 transition-opacity duration-300 hover:opacity-70"
             >
               <Icon name="user" size={16} />
             </Link>
@@ -120,12 +122,10 @@ export function Header() {
               type="button"
               aria-label={`Bag — ${count} item${count === 1 ? "" : "s"}`}
               onClick={() => setBagOpen(true)}
-              className="relative flex h-10 items-center justify-center gap-1.5 px-2 hover:opacity-70"
+              className="relative flex h-10 items-center justify-center gap-1.5 px-2 text-charcoal-700 transition-opacity duration-300 hover:opacity-70"
             >
               <Icon name="bag" size={18} />
-              <span className="font-mono text-[10px] tracking-wider text-charcoal/60">
-                / {count} /
-              </span>
+              <span className="swr-meta text-gold">{count}</span>
             </button>
           </div>
         </div>

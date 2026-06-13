@@ -16,29 +16,28 @@ type LinkProps = BaseProps &
   Omit<AnchorHTMLAttributes<HTMLAnchorElement>, "type"> & { href: string };
 
 const base =
-  "inline-flex items-center justify-center gap-2 font-sans font-medium tracking-wide " +
-  "transition-all duration-150 ease-out active:scale-[0.98] " +
+  "inline-flex items-center justify-center gap-2 font-sans font-semibold uppercase tracking-widest " +
+  "transition-all duration-300 ease-out " +
   "disabled:opacity-50 disabled:pointer-events-none select-none";
 
 const sizes: Record<Size, string> = {
-  sm: "text-[11px] px-4 py-2",
-  md: "text-[13px] px-5 py-3",
-  lg: "text-[14px] px-7 py-3.5",
+  sm: "text-[10px] px-5 py-2.5",
+  md: "text-[11px] px-7 py-3.5",
+  lg: "text-[12px] px-8 py-4",
 };
 
 const variants: Record<Variant, string> = {
   primary:
-    "rounded-pill bg-charcoal text-cream hover:bg-charcoal-800 " +
-    "shadow-soft",
+    "rounded-none bg-charcoal text-cream hover:bg-charcoal-800",
   secondary:
-    "rounded-pill bg-transparent text-charcoal border border-[var(--hairline-strong)] " +
-    "hover:bg-cream-50 hover:border-charcoal",
+    "rounded-none bg-transparent text-charcoal border border-charcoal " +
+    "hover:bg-charcoal hover:text-cream",
   ghost:
-    "rounded-pill bg-cream-200 text-charcoal hover:bg-cream-50 border border-transparent",
+    "rounded-none bg-transparent text-charcoal border border-[var(--hairline-strong)] " +
+    "hover:border-charcoal",
   link:
-    "rounded-none bg-transparent text-charcoal px-0 py-3 " +
-    "border-b border-[var(--hairline)] hover:border-charcoal " +
-    "text-[12px] uppercase tracking-wider",
+    "rounded-none bg-transparent text-gold px-0 py-1 normal-case " +
+    "swr-underline-anim text-[12px] uppercase tracking-widest",
 };
 
 function cls(...xs: (string | false | undefined)[]) {

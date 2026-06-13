@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Swarom - Shop High Jewelry</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,400;600&amp;family=Playfair+Display:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container": "#f4ede5",
+                        "on-secondary-fixed": "#1c1b1b",
+                        "on-error": "#ffffff",
+                        "on-secondary-fixed-variant": "#474746",
+                        "secondary-container": "#e2dfde",
+                        "on-primary": "#ffffff",
+                        "surface-container-low": "#faf2eb",
+                        "tertiary-fixed-dim": "#c9c6c0",
+                        "error": "#ba1a1a",
+                        "on-primary-fixed": "#251a00",
+                        "on-tertiary-container": "#41403c",
+                        "tertiary": "#5f5e59",
+                        "primary": "#725b26",
+                        "secondary": "#5f5e5e",
+                        "on-secondary-container": "#636262",
+                        "on-secondary": "#ffffff",
+                        "secondary-fixed-dim": "#c8c6c5",
+                        "tertiary-container": "#aeaca6",
+                        "surface-bright": "#fff8f2",
+                        "on-primary-fixed-variant": "#594410",
+                        "on-background": "#1e1b17",
+                        "primary-fixed-dim": "#e1c383",
+                        "surface-container-lowest": "#ffffff",
+                        "on-tertiary-fixed": "#1c1c18",
+                        "tertiary-fixed": "#e5e2db",
+                        "surface": "#fff8f2",
+                        "primary-fixed": "#ffdf9d",
+                        "on-surface": "#1e1b17",
+                        "surface-variant": "#e8e1da",
+                        "on-tertiary": "#ffffff",
+                        "inverse-surface": "#33302b",
+                        "background": "#fff8f2",
+                        "inverse-on-surface": "#f7f0e8",
+                        "surface-tint": "#725b26",
+                        "outline": "#7e7668",
+                        "primary-container": "#c6a96c",
+                        "inverse-primary": "#e1c383",
+                        "error-container": "#ffdad6",
+                        "secondary-fixed": "#e5e2e1",
+                        "surface-container-high": "#eee7df",
+                        "surface-container-highest": "#e8e1da",
+                        "on-surface-variant": "#4d463a",
+                        "outline-variant": "#d0c5b5",
+                        "on-tertiary-fixed-variant": "#474742",
+                        "surface-dim": "#e0d9d1",
+                        "on-primary-container": "#523d0a",
+                        "on-error-container": "#93000a"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "unit": "8px",
+                        "margin-desktop": "80px",
+                        "section-gap": "120px",
+                        "margin-mobile": "24px",
+                        "gutter": "32px",
+                        "container-max": "1440px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Playfair Display", "serif"],
+                        "display-lg-mobile": ["Playfair Display", "serif"],
+                        "display-lg": ["Playfair Display", "serif"],
+                        "label-caps": ["Literata", "serif"],
+                        "headline-sm": ["Playfair Display", "serif"],
+                        "body-md": ["Literata", "serif"],
+                        "body-lg": ["Literata", "serif"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["32px", { "lineHeight": "1.3", "letterSpacing": "0.02em", "fontWeight": "400" }],
+                        "display-lg-mobile": ["40px", { "lineHeight": "1.2", "letterSpacing": "0.03em", "fontWeight": "400" }],
+                        "display-lg": ["64px", { "lineHeight": "1.1", "letterSpacing": "0.05em", "fontWeight": "400" }],
+                        "label-caps": ["12px", { "lineHeight": "1", "letterSpacing": "0.2em", "fontWeight": "600" }],
+                        "headline-sm": ["24px", { "lineHeight": "1.4", "letterSpacing": "0.01em", "fontWeight": "500" }],
+                        "body-md": ["16px", { "lineHeight": "1.6", "letterSpacing": "0", "fontWeight": "400" }],
+                        "body-lg": ["18px", { "lineHeight": "1.6", "letterSpacing": "0", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { background-color: theme('colors.background'); color: theme('colors.on-background'); }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24; }
+        .fill-icon { font-variation-settings: 'FILL' 1; }
+        
+        /* Custom scrollbar for a cleaner look */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: theme('colors.surface-container'); }
+        ::-webkit-scrollbar-thumb { background: theme('colors.outline-variant'); }
+        ::-webkit-scrollbar-thumb:hover { background: theme('colors.outline'); }
+
+        .image-hover-zoom { transition: transform 0.7s ease; }
+        .card-container:hover .image-hover-zoom { transform: scale(1.05); }
+        .underline-anim { position: relative; }
+        .underline-anim::after {
+            content: ''; position: absolute; width: 0; height: 1px; bottom: -2px; left: 50%;
+            background-color: theme('colors.primary-container'); transition: all 0.3s ease; transform: translateX(-50%);
+        }
+        .underline-anim:hover::after { width: 100%; }
+    </style>
+</head>
+<body class="antialiased min-h-screen flex flex-col font-body-md text-body-md">
+<!-- TopNavBar -->
+<nav class="bg-surface/80 dark:bg-surface-dim/80 backdrop-blur-md fixed top-0 w-full z-50 border-b border-outline-variant/30">
+<div class="flex justify-between items-center px-margin-desktop py-6 w-full max-w-container-max mx-auto">
+<div class="flex space-x-8 hidden md:flex">
+<a class="font-label-caps text-label-caps text-primary dark:text-primary-fixed border-b border-primary pb-1" href="#">High Jewelry</a>
+<a class="font-label-caps text-label-caps text-on-surface-variant dark:text-on-surface-variant hover:text-primary hover:opacity-70 transition-opacity duration-300" href="#">Engagement</a>
+<a class="font-label-caps text-label-caps text-on-surface-variant dark:text-on-surface-variant hover:text-primary hover:opacity-70 transition-opacity duration-300" href="#">Timepieces</a>
+<a class="font-label-caps text-label-caps text-on-surface-variant dark:text-on-surface-variant hover:text-primary hover:opacity-70 transition-opacity duration-300" href="#">Heritage</a>
+<a class="font-label-caps text-label-caps text-on-surface-variant dark:text-on-surface-variant hover:text-primary hover:opacity-70 transition-opacity duration-300" href="#">Bespoke</a>
+</div>
+<a class="font-headline-md text-headline-md tracking-widest uppercase text-primary dark:text-primary-fixed cursor-pointer transition-all duration-500 ease-in-out" href="/">
+                Swarom
+            </a>
+<div class="flex items-center space-x-6">
+<button class="text-primary hover:opacity-70 transition-opacity duration-300 cursor-pointer">
+<span class="material-symbols-outlined">shopping_bag</span>
+</button>
+</div>
+</div>
+</nav>
+<!-- Main Content -->
+<main class="flex-grow pt-32 pb-section-gap w-full max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop">
+<!-- Hero/Intro -->
+<header class="text-center mb-24 max-w-3xl mx-auto">
+<h1 class="font-display-lg-mobile md:font-display-lg text-primary mb-6">The Collections</h1>
+<p class="font-body-lg text-on-surface-variant">
+                Discover our curated selection of fine jewelry, where centuries of artisanal heritage meet contemporary elegance. Each piece is meticulously crafted to be as enduring as the legacy it represents.
+            </p>
+</header>
+<div class="flex flex-col lg:flex-row gap-gutter">
+<!-- Filters Sidebar (Desktop) / Top Bar (Mobile) -->
+<aside class="w-full lg:w-64 flex-shrink-0 mb-12 lg:mb-0">
+<div class="sticky top-32 space-y-12">
+<!-- Category Filter -->
+<div>
+<h3 class="font-label-caps text-label-caps text-on-surface mb-6 border-b border-outline-variant/30 pb-2">Category</h3>
+<ul class="space-y-4">
+<li><a class="font-body-md text-primary underline-anim inline-block" href="#">All Pieces</a></li>
+<li><a class="font-body-md text-on-surface-variant hover:text-primary transition-colors" href="#">Necklaces</a></li>
+<li><a class="font-body-md text-on-surface-variant hover:text-primary transition-colors" href="#">Rings</a></li>
+<li><a class="font-body-md text-on-surface-variant hover:text-primary transition-colors" href="#">Earrings</a></li>
+<li><a class="font-body-md text-on-surface-variant hover:text-primary transition-colors" href="#">Bracelets</a></li>
+</ul>
+</div>
+<!-- Material Filter -->
+<div>
+<h3 class="font-label-caps text-label-caps text-on-surface mb-6 border-b border-outline-variant/30 pb-2">Material</h3>
+<div class="flex flex-col gap-4">
+<label class="flex items-center gap-3 cursor-pointer group">
+<div class="w-4 h-4 rounded-full border border-primary flex items-center justify-center">
+<div class="w-2 h-2 rounded-full bg-primary"></div>
+</div>
+<span class="text-on-surface group-hover:text-primary transition-colors">18k Yellow Gold</span>
+</label>
+<label class="flex items-center gap-3 cursor-pointer group">
+<div class="w-4 h-4 rounded-full border border-outline-variant group-hover:border-primary transition-colors flex items-center justify-center">
+</div>
+<span class="text-on-surface-variant group-hover:text-primary transition-colors">Platinum</span>
+</label>
+<label class="flex items-center gap-3 cursor-pointer group">
+<div class="w-4 h-4 rounded-full border border-outline-variant group-hover:border-primary transition-colors flex items-center justify-center">
+</div>
+<span class="text-on-surface-variant group-hover:text-primary transition-colors">Rose Gold</span>
+</label>
+</div>
+</div>
+<!-- Price Filter -->
+<div>
+<h3 class="font-label-caps text-label-caps text-on-surface mb-6 border-b border-outline-variant/30 pb-2">Price</h3>
+<div class="space-y-4">
+<input class="w-full h-1 bg-surface-variant rounded-lg appearance-none cursor-pointer accent-primary" max="100000" min="0" type="range" value="100000"/>
+<div class="flex justify-between text-sm text-on-surface-variant">
+<span>$0</span>
+<span>$100,000+</span>
+</div>
+</div>
+</div>
+</div>
+</aside>
+<!-- Product Grid -->
+<div class="flex-grow grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-x-8 gap-y-16">
+<!-- Product Card 1 -->
+<article class="group card-container cursor-pointer flex flex-col">
+<div class="relative overflow-hidden aspect-[4/5] bg-surface-container mb-6 flex items-center justify-center">
+<img alt="Antique Gold Temple Necklace" class="object-cover w-full h-full image-hover-zoom" data-alt="A stunning antique gold temple necklace displayed on a dark velvet cushion. Warm, dramatic lighting highlights the intricate craftsmanship, ruby drops, and traditional Indian motifs. The mood is opulent, rich, and deeply rooted in heritage luxury." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDthWJWOKk5bWv8sYL9phw4-MV2iuiV0Rrh7Uonc2cQGSp0LXoiv_GOQvYFy8CFfIpVStuYtKn0T6hK41e7OC0qPv8dkbyZ7gMJKy6WUT7xszUT_9MdZ6v9tpe52ItCz794j12AXLCPGQZlWhnTtHs0a68ZNNC9TXv7A8vV6Rv-uKd9hwaWjs2ZBZVYCjAj5X9u5JKvIixEVBgFVgCD6-IXQ_GOH-Ll9ymCj_yKxY899HSaaMcGi2xquO2EfiabREexqt-7JGaTwyk"/>
+<div class="absolute bottom-0 left-0 w-full p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex justify-center bg-gradient-to-t from-surface-container-highest/80 to-transparent">
+<button class="font-label-caps text-label-caps text-primary underline-anim">View Details</button>
+</div>
+</div>
+<div class="text-center space-y-2 flex-grow flex flex-col justify-end">
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Antique Gold Temple Necklace</h2>
+<p class="font-body-md text-on-surface-variant">$24,500</p>
+</div>
+</article>
+<!-- Product Card 2 -->
+<article class="group card-container cursor-pointer flex flex-col mt-0 md:mt-12 xl:mt-0">
+<div class="relative overflow-hidden aspect-[4/5] bg-surface-container mb-6 flex items-center justify-center">
+<img alt="Sapphire Diamond Set" class="object-cover w-full h-full image-hover-zoom" data-alt="A luxurious sapphire and diamond necklace worn by an elegant model against a soft, draped velvet background. The deep blue of the sapphires contrasts beautifully with the brilliant diamonds. The lighting is soft and flattering, reminiscent of a high-end fashion editorial." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCYr_6i2D2UoO7p1uVihmByOY6QB1zdvLR-wh9QlGmXr3aK0jPK4UZnTp2u_F51qxUgv7N1ZXTtbLFXy0pTfg52-HAAM-2-MHyVIxWyf_COTN9hYys8YskSatLdHQNorXw-DAoor-mOSkvT76ofggF-AKe9sdFvdkMXX3jZ0AbFdnvRPAnSqmrSEk9heMIBdC6hE28pD71GMTzYyelOMeKrdhf9lx-bhOICkBRWwBmO8l78OEHqd2hiKhGcMxwftSOyfSKIXK0mhR0"/>
+<div class="absolute bottom-0 left-0 w-full p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex justify-center bg-gradient-to-t from-surface-container-highest/80 to-transparent">
+<button class="font-label-caps text-label-caps text-primary underline-anim">View Details</button>
+</div>
+</div>
+<div class="text-center space-y-2 flex-grow flex flex-col justify-end">
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Sapphire Diamond Set</h2>
+<p class="font-body-md text-on-surface-variant">$85,000</p>
+</div>
+</article>
+<!-- Product Card 3 -->
+<article class="group card-container cursor-pointer flex flex-col">
+<div class="relative overflow-hidden aspect-[4/5] bg-surface-container mb-6 flex items-center justify-center">
+<img alt="Polki Bridal Jhumkas" class="object-cover w-full h-full image-hover-zoom" data-alt="Intricate Polki bridal jhumka earrings resting on a smooth, ivory marble surface. The uncut diamonds catch the light subtly, framed by gold and tiny pearls. The composition is minimalist and airy, focusing entirely on the delicate details of the jewelry." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCOauRyezHMMi1Cf8J19aaDkY3cisbhBfWh97Xy69NIx51U6W9IYWGIXIff5yw_5bM0c7eHni2J6Uz9saHMuyJLhhDYPXSDr9hqbYvo0WhSixkUMj7J1y4U2RB4x-Wju3V2I837dYBtf0qtcB_blheQjBwZjkLp0LRFuGvEy7J70670N7JzYIrXu-cwIM1T-P64Ln-qZVb_nEW4gxaT0GbmIrr71fbFpLW0ByUw5sQA2sCNgRm2vaVEVtmGbOrv66M9YrnaYSfsB44"/>
+<div class="absolute top-4 right-4 z-10">
+<span class="font-label-caps text-label-caps bg-surface text-primary px-3 py-1 rounded-full border border-primary/20">New Arrival</span>
+</div>
+<div class="absolute bottom-0 left-0 w-full p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex justify-center bg-gradient-to-t from-surface-container-highest/80 to-transparent">
+<button class="font-label-caps text-label-caps text-primary underline-anim">View Details</button>
+</div>
+</div>
+<div class="text-center space-y-2 flex-grow flex flex-col justify-end">
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Polki Bridal Jhumkas</h2>
+<p class="font-body-md text-on-surface-variant">$12,800</p>
+</div>
+</article>
+<!-- Product Card 4 -->
+<article class="group card-container cursor-pointer flex flex-col mt-0 md:mt-12 xl:mt-24">
+<div class="relative overflow-hidden aspect-[4/5] bg-surface-container mb-6 flex items-center justify-center">
+<img alt="Emerald Eternity Ring" class="object-cover w-full h-full image-hover-zoom" data-alt="A stunning emerald eternity ring placed on a stark white plinth against a soft beige background. The vibrant green of the emeralds provides a striking contrast. Lighting is crisp and gallery-like, emphasizing the clean lines and modern luxury of the piece." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC-wMrYGFh-foUiiU6q1258pA2eOyQZ7QvdN8gSgogozVCbRjuAvKH9AZ4t5SRqgEPTpWaViEisP08u_gwg2PtPOTFu7hmW4aM9zphP9tLWqienCxRHZrmGkxxOYyvTBpMy-gThkIfykjlIhC8wpiMfDgmlh37Zyz3tXqNmFVTmTrBVnkceFy7bPgTw1FnH-7fXEJ2ZlJUvuCT8juP1zq147UjZMYIRsb9_qvLcw-mbCXi01yaf6KwrEovDAdDFclTXWYm4BKEI0M0"/>
+<div class="absolute bottom-0 left-0 w-full p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex justify-center bg-gradient-to-t from-surface-container-highest/80 to-transparent">
+<button class="font-label-caps text-label-caps text-primary underline-anim">View Details</button>
+</div>
+</div>
+<div class="text-center space-y-2 flex-grow flex flex-col justify-end">
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Emerald Eternity Ring</h2>
+<p class="font-body-md text-on-surface-variant">$18,200</p>
+</div>
+</article>
+<!-- Product Card 5 -->
+<article class="group card-container cursor-pointer flex flex-col mt-0 xl:mt-12">
+<div class="relative overflow-hidden aspect-[4/5] bg-surface-container mb-6 flex items-center justify-center">
+<img alt="Kundan Maang Tikka" class="object-cover w-full h-full image-hover-zoom" data-alt="A traditional Kundan Maang Tikka delicately draped over a piece of textured, raw silk fabric in off-white. The gold setting and glass stones sparkle gently in soft, diffused lighting. The image evokes a sense of timeless elegance and intimate, private salon viewing." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAVAoKO0PQWmJzqdGL00QezUI9LDMg807851GWwMHe85ZkmdBNaAmY_P8vYGVDhCCoaIfx9Pp4vyuZoXipIrj6fDoH7l_bJ6V27Fe9SRZJZKA9-02Oe0TavLUsAzUrvQUpbeiYn8BcyV6QvJf1zGhdFvEBbJQ9OEP5Qj-XnyHJgKLM7knN0egFI2AoZchxU69TO0g84myBJreJgyy3x2eYqtzqfkenPusq5qWqw70EyifSe1YoFqg96ZfK9zvEkXe6_Un01cEvRKTo"/>
+<div class="absolute bottom-0 left-0 w-full p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex justify-center bg-gradient-to-t from-surface-container-highest/80 to-transparent">
+<button class="font-label-caps text-label-caps text-primary underline-anim">View Details</button>
+</div>
+</div>
+<div class="text-center space-y-2 flex-grow flex flex-col justify-end">
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Kundan Maang Tikka</h2>
+<p class="font-body-md text-on-surface-variant">$8,900</p>
+</div>
+</article>
+<!-- Content Block / Quote (Asymmetric insertion) -->
+<div class="col-span-1 md:col-span-2 xl:col-span-1 flex items-center justify-center p-8 bg-surface-container-low border border-outline-variant/20 aspect-[4/5]">
+<div class="text-center space-y-6 max-w-sm">
+<span class="material-symbols-outlined text-primary text-4xl">diamond</span>
+<h3 class="font-headline-md text-primary">Bespoke Creations</h3>
+<p class="font-body-md text-on-surface-variant">Commission a piece as unique as your own story. Our master jewelers await your vision.</p>
+<button class="mt-4 font-label-caps text-label-caps text-primary border-b border-primary pb-1 hover:opacity-70 transition-opacity">Inquire Now</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Load More -->
+<div class="mt-24 text-center">
+<button class="px-8 py-4 border border-on-secondary-fixed text-on-surface font-label-caps text-label-caps hover:bg-on-secondary-fixed hover:text-surface transition-colors duration-300">
+                Load More Pieces
+            </button>
+</div>
+</main>
+<!-- Footer -->
+<footer class="bg-surface-container dark:bg-surface-container-highest w-full mt-section-gap border-t border-outline-variant flex flex-col items-center py-margin-desktop px-margin-desktop gap-unit">
+<div class="font-headline-sm text-headline-sm text-primary dark:text-primary-fixed mb-8">
+            Swarom
+        </div>
+<ul class="list-none flex flex-wrap gap-gutter justify-center mb-12">
+<li><a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors duration-300" href="#">The Maison</a></li>
+<li><a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors duration-300" href="#">Care &amp; Service</a></li>
+<li><a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors duration-300" href="#">Inquire</a></li>
+<li><a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors duration-300" href="#">Sustainability</a></li>
+<li><a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors duration-300" href="#">Privacy</a></li>
+<li><a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors duration-300" href="#">Terms</a></li>
+</ul>
+<div class="text-center">
+<p class="font-body-md text-body-md text-on-surface dark:text-on-surface mb-4">© 2024 Swarom Haute Joaillerie. All rights reserved.</p>
+<p class="font-label-caps text-label-caps text-outline-variant tracking-[0.3em] opacity-50">VENUS</p>
+</div>
+</footer>
+</body></html>

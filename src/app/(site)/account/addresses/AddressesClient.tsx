@@ -242,7 +242,7 @@ function Field({
         value={value}
         onChange={(e) => onChange(e.target.value)}
         inputMode={inputMode}
-        className="rounded-lg bg-cream-50 border border-[var(--hairline)] px-4 py-3 font-sans text-[14px] text-charcoal outline-none focus:border-charcoal transition-colors"
+        className="bg-transparent border-b border-[var(--hairline-strong)] px-0 py-3 font-sans text-[15px] text-charcoal outline-none focus:border-gold transition-colors"
       />
     </label>
   );

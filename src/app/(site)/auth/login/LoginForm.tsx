@@ -221,7 +221,7 @@ function Field({
         placeholder={placeholder}
         disabled={disabled}
         inputMode={inputMode}
-        className="rounded-pill bg-cream-50 border border-[var(--hairline)] px-5 py-3 font-sans text-[14px] text-charcoal outline-none focus:border-charcoal transition-colors disabled:opacity-50"
+        className="bg-transparent border-b border-[var(--hairline-strong)] px-0 py-3 font-sans text-[15px] text-charcoal outline-none focus:border-gold transition-colors disabled:opacity-50"
       />
     </label>
   );

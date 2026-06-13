@@ -25,7 +25,7 @@ export function InstagramGallery() {
             href="https://instagram.com/swarom.in"
             target="_blank"
             rel="noopener noreferrer"
-            className="group relative aspect-square overflow-hidden rounded-md bg-cream-200"
+            className="group relative aspect-square overflow-hidden bg-cream-200"
           >
             <Image
               src={src}

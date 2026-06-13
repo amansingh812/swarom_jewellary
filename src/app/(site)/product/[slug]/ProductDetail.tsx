@@ -92,8 +92,8 @@ export function ProductDetail({ product, initialInWishlist = false }: ProductDet
                   key={i}
                   type="button"
                   onClick={() => setThumb(i)}
-                  className={`shrink-0 w-16 h-20 md:w-full md:h-[100px] rounded-md overflow-hidden border ${
-                    thumb === i ? "border-charcoal" : "border-[var(--hairline)]"
+                  className={`shrink-0 w-16 h-20 md:w-full md:h-[100px] overflow-hidden border transition-colors ${
+                    thumb === i ? "border-gold" : "border-[var(--hairline)] hover:border-gold-soft"
                   }`}
                   aria-label={`View image ${i + 1}`}
                 >
@@ -138,16 +138,16 @@ export function ProductDetail({ product, initialInWishlist = false }: ProductDet
                     }
                     maxLength={spec.max ?? 30}
                     placeholder={spec.label}
-                    className="w-full rounded-pill bg-cream-50 border border-[var(--hairline)] px-5 py-3 pr-14 font-sans text-[14px] text-charcoal outline-none focus:border-charcoal transition-colors"
+                    className="w-full bg-transparent border-b border-[var(--hairline-strong)] px-0 py-3 pr-14 font-sans text-[15px] text-charcoal outline-none focus:border-gold transition-colors"
                   />
                   {spec.max && (
-                    <span className="absolute right-4 top-1/2 -translate-y-1/2 font-mono text-[10px] text-charcoal/50">
+                    <span className="absolute right-4 top-1/2 -translate-y-1/2 font-sans text-[10px] tracking-wider text-charcoal/50">
                       {values[key].length}/{spec.max}
                     </span>
                   )}
                 </div>
                 {key === engravingKey && (
-                  <div className="rounded-md bg-cream-200 px-5 py-4 text-center mt-1">
+                  <div className="bg-cream-200 px-5 py-4 text-center mt-1">
                     <span className="font-serif italic text-[26px] md:text-[28px] text-charcoal">
                       {engravingValue || "—"}
                     </span>
@@ -242,7 +242,7 @@ function Bullet({
 }) {
   return (
     <li className="flex items-center gap-2.5 font-sans text-[13px] text-charcoal/80">
-      <Icon name={icon} size={14} className="text-charcoal/70" />
+      <Icon name={icon} size={14} className="text-gold" />
       <span>{children}</span>
     </li>
   );

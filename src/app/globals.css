@@ -3,34 +3,33 @@
 @tailwind utilities;
 
 /* ───────────────────────────────────────────────────────────
-   Swarom — Design Tokens (CSS variables)
-   Mirrors swarom-design-system/colors_and_type.css
+   Swarom — Lumière Atelier Design Tokens (CSS variables)
+   Quiet luxury: soft ivory canvas, 18k gold accents, deep
+   charcoal type, sharp (0px) shape language.
    ─────────────────────────────────────────────────────────── */
 :root {
-  --cream:        #F6F1EA;
-  --cream-50:     #FBF8F4;
-  --cream-200:    #EDE3D4;
-  /* Softened from near-black #1F1B16 → warm dark brown #2E2A24 to feel
-     gentler against the cream paper (matches the Mentis reference). */
-  --charcoal:     #2E2A24;
-  --charcoal-800: #3A332A;
-  --charcoal-700: #4A4239;
-  --silver:       #C9C7C2;
-  --silver-light: #E6E4DF;
-  --silver-dark:  #9A9893;
-  --gold:         #B8956A;
-  --gold-soft:    #D9C09A;
+  --cream:        #FFF8F2;  /* surface / soft ivory  */
+  --cream-50:     #FFFFFF;  /* surface-container-lowest */
+  --cream-200:    #F4EDE5;  /* surface-container */
+  --charcoal:     #1E1B17;  /* on-surface */
+  --charcoal-800: #33302B;  /* inverse-surface */
+  --charcoal-700: #4D463A;  /* on-surface-variant */
+  --silver:       #D0C5B5;  /* outline-variant */
+  --silver-light: #E8E1DA;  /* surface-variant */
+  --silver-dark:  #7E7668;  /* outline */
+  --gold:         #725B26;  /* primary — deep 18k gold, text-safe */
+  --gold-soft:    #C6A96C;  /* primary-container — gold accent */
   --moss:         #5A6B3F;
-  --oxide:        #8B2E2E;
+  --oxide:        #BA1A1A;
 
   --bg:        var(--cream);
   --fg1:       var(--charcoal);
-  --fg2:       rgba(46, 42, 36, 0.80);
-  --fg3:       rgba(46, 42, 36, 0.65);
-  --fg4:       rgba(46, 42, 36, 0.50);
-  --fg5:       rgba(46, 42, 36, 0.30);
-  --hairline:        rgba(46, 42, 36, 0.15);
-  --hairline-strong: rgba(46, 42, 36, 0.40);
+  --fg2:       rgba(30, 27, 23, 0.82);
+  --fg3:       var(--charcoal-700);
+  --fg4:       rgba(77, 70, 58, 0.70);
+  --fg5:       rgba(77, 70, 58, 0.40);
+  --hairline:        rgba(208, 197, 181, 0.55);
+  --hairline-strong: var(--silver);
 
   --ease-out:    cubic-bezier(0.22, 0.61, 0.36, 1);
   --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
@@ -42,7 +41,7 @@ html { -webkit-text-size-adjust: 100%; }
 body {
   background: var(--cream);
   color: var(--charcoal);
-  font-family: var(--font-sans), "Montserrat", system-ui, sans-serif;
+  font-family: var(--font-sans), "Literata", Georgia, serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   min-height: 100vh;
@@ -51,23 +50,25 @@ body {
 a { color: inherit; text-decoration: none; }
 button { font: inherit; }
 
-/* ───── Paper grain (page-wide) ─────────────────────────── */
+/* ───── Paper grain — whisper-subtle on ivory ────────────── */
 .swr-grain::before {
   content: "";
   position: fixed; inset: 0;
   pointer-events: none;
-  opacity: 0.04;
+  opacity: 0.02;
   z-index: 1;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' /%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' /%3E%3C/svg%3E");
 }
 
-/* ───── Semantic type classes (used in JSX as className) ── */
+/* ───── Semantic type classes (used in JSX as className) ──
+   Headlines: Playfair Display with generous tracking.
+   Body: Literata with airy line-height.                      */
 .swr-display {
   font-family: var(--font-serif), Georgia, serif;
   font-weight: 400;
-  font-size: clamp(40px, 7vw, 80px);
-  line-height: 1.07;
-  letter-spacing: -0.01em;
+  font-size: clamp(40px, 6vw, 64px);
+  line-height: 1.1;
+  letter-spacing: 0.05em;
   color: var(--fg1);
   margin: 0;
 }
@@ -76,9 +77,9 @@ button { font: inherit; }
 .swr-h1 {
   font-family: var(--font-serif), Georgia, serif;
   font-weight: 400;
-  font-size: clamp(32px, 5.4vw, 52px);
-  line-height: 1.15;
-  letter-spacing: -0.01em;
+  font-size: clamp(32px, 5vw, 48px);
+  line-height: 1.2;
+  letter-spacing: 0.03em;
   color: var(--fg1);
   margin: 0;
 }
@@ -87,9 +88,9 @@ button { font: inherit; }
 .swr-h2 {
   font-family: var(--font-serif), Georgia, serif;
   font-weight: 400;
-  font-size: clamp(26px, 4vw, 38px);
-  line-height: 1.2;
-  letter-spacing: -0.005em;
+  font-size: clamp(26px, 4vw, 32px);
+  line-height: 1.3;
+  letter-spacing: 0.02em;
   color: var(--fg1);
   margin: 0;
 }
@@ -98,8 +99,9 @@ button { font: inherit; }
 .swr-h4 {
   font-family: var(--font-serif), Georgia, serif;
   font-weight: 500;
-  font-size: 18px;
-  line-height: 1.3;
+  font-size: 20px;
+  line-height: 1.4;
+  letter-spacing: 0.01em;
   color: var(--fg1);
   margin: 0;
 }
@@ -109,24 +111,25 @@ button { font: inherit; }
   font-style: italic;
   font-weight: 400;
   font-size: clamp(18px, 3vw, 24px);
-  line-height: 1.35;
+  line-height: 1.4;
+  letter-spacing: 0.01em;
   color: var(--fg2);
 }
 
 .swr-lede {
-  font-family: var(--font-sans), system-ui, sans-serif;
-  font-weight: 300;
-  font-size: 15px;
-  line-height: 1.65;
-  letter-spacing: 0.01em;
+  font-family: var(--font-sans), Georgia, serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.6;
+  letter-spacing: 0;
   color: var(--fg3);
 }
 @media (min-width: 768px) {
-  .swr-lede { font-size: 16px; }
+  .swr-lede { font-size: 18px; }
 }
 
 .swr-body {
-  font-family: var(--font-sans), system-ui, sans-serif;
+  font-family: var(--font-sans), Georgia, serif;
   font-weight: 400;
   font-size: 15px;
   line-height: 1.6;
@@ -134,18 +137,18 @@ button { font: inherit; }
 }
 
 .swr-eyebrow {
-  font-family: var(--font-sans), system-ui, sans-serif;
-  font-weight: 400;
-  font-size: 11px;
+  font-family: var(--font-sans), Georgia, serif;
+  font-weight: 600;
+  font-size: 12px;
   line-height: 1;
-  letter-spacing: 0.22em;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: var(--fg2);
+  color: var(--gold);
 }
 
 .swr-meta {
-  font-family: var(--font-sans), system-ui, sans-serif;
-  font-weight: 400;
+  font-family: var(--font-sans), Georgia, serif;
+  font-weight: 600;
   font-size: 10px;
   letter-spacing: 0.2em;
   text-transform: uppercase;
@@ -153,24 +156,24 @@ button { font: inherit; }
 }
 
 .swr-price {
-  font-family: var(--font-serif), Georgia, serif;
-  font-weight: 500;
-  font-size: 18px;
-  letter-spacing: 0.04em;
-  color: var(--charcoal);
+  font-family: var(--font-sans), Georgia, serif;
+  font-weight: 400;
+  font-size: 16px;
+  letter-spacing: 0.02em;
+  color: var(--charcoal-700);
 }
 .swr-price-lg {
-  font-family: var(--font-serif), Georgia, serif;
-  font-weight: 500;
-  font-size: 24px;
-  letter-spacing: 0.04em;
+  font-family: var(--font-sans), Georgia, serif;
+  font-weight: 400;
+  font-size: 22px;
+  letter-spacing: 0.02em;
   color: var(--charcoal);
 }
 
 .swr-signature {
   font-family: var(--font-script), cursive;
   font-weight: 400;
-  color: var(--gold);
+  color: var(--gold-soft);
   letter-spacing: 0.01em;
   transform: rotate(-2deg);
   transform-origin: left center;
@@ -189,7 +192,7 @@ button { font: inherit; }
   display: block;
   height: 1px;
   width: 28px;
-  background: var(--hairline-strong);
+  background: var(--gold-soft);
 }
 @media (min-width: 768px) {
   .swr-hairline-rule::before,
@@ -199,10 +202,35 @@ button { font: inherit; }
 .swr-shimmer-line {
   height: 1px;
   width: 96px;
-  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  background: linear-gradient(90deg, transparent, var(--gold-soft), transparent);
   animation: shimmer 4s ease-in-out infinite;
   transform-origin: center;
 }
+
+/* Gold divider — 1px linear boundary between thematic sections */
+.swr-gold-divider {
+  height: 1px;
+  width: 100%;
+  background: var(--gold-soft);
+  opacity: 0.5;
+}
+
+/* Center-out gold underline animation for text links */
+.swr-underline-anim { position: relative; }
+.swr-underline-anim::after {
+  content: "";
+  position: absolute;
+  width: 0; height: 1px;
+  bottom: -2px; left: 50%;
+  background-color: var(--gold-soft);
+  transition: all 0.3s ease;
+  transform: translateX(-50%);
+}
+.swr-underline-anim:hover::after { width: 100%; }
+
+/* Editorial image hover zoom (used inside .group/.swr-card) */
+.swr-zoom { transition: transform 0.7s ease; }
+.group:hover .swr-zoom { transform: scale(1.05); }
 
 /* ───── Ambient orbs (hero decoration) ───────────────────── */
 .swr-orb {
@@ -215,13 +243,13 @@ button { font: inherit; }
 .swr-orb-1 {
   top: -120px; right: -120px;
   width: 320px; height: 320px;
-  background: radial-gradient(circle, #E6E4DF 0%, transparent 70%);
+  background: radial-gradient(circle, #E8E1DA 0%, transparent 70%);
   opacity: 0.6;
 }
 .swr-orb-2 {
   bottom: -120px; left: -120px;
   width: 320px; height: 320px;
-  background: radial-gradient(circle, rgba(184,149,106,0.4) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(198,169,108,0.35) 0%, transparent 70%);
   opacity: 0.5;
 }
 @media (min-width: 768px) {
@@ -236,15 +264,21 @@ button { font: inherit; }
   .animate-fadeup { animation: none !important; }
 }
 
-/* ───── Focus ring (gold @ 40%) ─────────────────────────── */
+/* ───── Focus ring (gold @ 50%) ─────────────────────────── */
 *:focus-visible {
-  outline: 2px solid rgba(184, 149, 106, 0.4);
+  outline: 2px solid rgba(198, 169, 108, 0.5);
   outline-offset: 2px;
 }
 
 /* ───── Hide scrollbar utility (for filter chip rows) ────── */
 .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 .no-scrollbar::-webkit-scrollbar { display: none; }
+
+/* Refined scrollbar on ivory */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: var(--cream-200); }
+::-webkit-scrollbar-thumb { background: var(--silver); }
+::-webkit-scrollbar-thumb:hover { background: var(--silver-dark); }
 
 /* ───── Animated keyframes (referenced by Tailwind animate-* and inline) */
 @keyframes shimmer {

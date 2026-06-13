@@ -36,7 +36,7 @@ export function BagDrawer() {
         aria-label="Your bag"
         className="
           fixed z-[61] bg-cream shadow-lift flex flex-col
-          inset-x-0 bottom-0 max-h-[88vh] rounded-t-[24px] animate-slideup
+          inset-x-0 bottom-0 max-h-[88vh] animate-slideup
           md:inset-y-0 md:right-0 md:left-auto md:bottom-auto md:max-h-none md:rounded-t-none md:w-[440px] md:max-w-[92vw] md:animate-slidein
         "
       >
@@ -46,9 +46,9 @@ export function BagDrawer() {
         </div>
 
         <header className="flex items-center justify-between px-6 py-4 border-b border-[var(--hairline)] md:px-7">
-          <span className="font-serif font-medium text-[20px] text-charcoal md:text-[22px]">
+          <span className="font-serif font-medium text-[20px] tracking-wide text-charcoal md:text-[22px]">
             Your bag{" "}
-            <span className="font-mono text-[11px] text-charcoal/50 ml-1">/ {count} /</span>
+            <span className="swr-meta !text-gold ml-2">{count} item{count === 1 ? "" : "s"}</span>
           </span>
           <button
             type="button"
@@ -80,7 +80,7 @@ export function BagDrawer() {
                   key={item.key}
                   className="grid grid-cols-[64px_1fr_auto] gap-4 py-5 border-b border-[var(--hairline)] items-center md:grid-cols-[72px_1fr_auto]"
                 >
-                  <div className="aspect-[4/5] w-16 md:w-[72px] rounded-md overflow-hidden bg-cream-200">
+                  <div className="aspect-[4/5] w-16 md:w-[72px] overflow-hidden bg-cream-200">
                     {item.image ? (
                       <Image
                         src={item.image}
@@ -110,7 +110,7 @@ export function BagDrawer() {
                       >
                         <Icon name="minus" size={10} />
                       </button>
-                      <span className="font-mono text-[12px] text-charcoal w-5 text-center">
+                      <span className="font-sans text-[13px] text-charcoal w-5 text-center">
                         {item.quantity}
                       </span>
                       <button

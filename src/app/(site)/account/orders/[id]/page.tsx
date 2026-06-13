@@ -122,7 +122,7 @@ export default async function OrderDetailPage({ params }: PageProps) {
                       ))}
                     </div>
                   )}
-                  <div className="font-mono text-[10px] text-charcoal/50 mt-1">× {it.quantity}</div>
+                  <div className="font-sans tracking-wider text-[11px] text-charcoal/50 mt-1">× {it.quantity}</div>
                 </div>
                 <div className="swr-price whitespace-nowrap">
                   {formatINR(it.unit_price * it.quantity)}

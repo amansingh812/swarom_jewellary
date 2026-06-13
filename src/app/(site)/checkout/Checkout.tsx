@@ -155,7 +155,7 @@ export function Checkout() {
         </p>
         {confirmedOrderId && (
           <p className="swr-meta text-charcoal/60">
-            Order ref: <span className="font-mono">#{confirmedOrderId.slice(0, 8)}</span>
+            Order ref: <span className="font-sans tracking-wider">#{confirmedOrderId.slice(0, 8)}</span>
           </p>
         )}
         <div className="flex gap-3 mt-4">
@@ -291,7 +291,7 @@ export function Checkout() {
           <ul className="mt-4 m-0 p-0 list-none flex flex-col gap-4">
             {lines.map((line) => (
               <li key={line.key} className="flex gap-3 items-start">
-                <div className="w-14 h-16 rounded-md overflow-hidden bg-cream-200 shrink-0">
+                <div className="w-14 h-16 overflow-hidden bg-cream-200 shrink-0">
                   <Image src={line.image} alt="" width={56} height={64} className="w-full h-full object-cover" />
                 </div>
                 <div className="flex-1 min-w-0">
@@ -299,7 +299,7 @@ export function Checkout() {
                     {line.name}{" "}
                     {line.modifier && <i className="font-normal text-charcoal/65">{line.modifier}</i>}
                   </div>
-                  <div className="font-mono text-[10px] text-charcoal/50 mt-0.5">× {line.quantity}</div>
+                  <div className="font-sans text-[11px] tracking-wider text-charcoal/50 mt-0.5">× {line.quantity}</div>
                 </div>
                 <div className="swr-price text-[14px] whitespace-nowrap">{formatINR(line.price * line.quantity)}</div>
               </li>
@@ -328,7 +328,7 @@ function Field({
       <input
         type={type} required={required} value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="rounded-lg bg-cream-50 border border-[var(--hairline)] px-4 py-3 font-sans text-[14px] text-charcoal outline-none focus:border-charcoal transition-colors"
+        className="bg-transparent border-b border-[var(--hairline-strong)] px-0 py-3 font-sans text-[15px] text-charcoal outline-none focus:border-gold transition-colors"
       />
     </label>
   );
@@ -346,8 +346,8 @@ function Row({ label, value, large }: { label: string; value: string; large?: bo
 function StepDot({ active, done, label, n }: { active: boolean; done: boolean; label: string; n: number }) {
   return (
     <div className="flex items-center gap-2">
-      <span className={`h-6 w-6 rounded-full flex items-center justify-center font-mono text-[10px] ${
-        active || done ? "bg-charcoal text-cream" : "border border-[var(--hairline-strong)] text-charcoal/40"
+      <span className={`h-6 w-6 rounded-full flex items-center justify-center font-sans text-[10px] font-semibold ${
+        active || done ? "bg-gold text-cream" : "border border-[var(--hairline-strong)] text-charcoal/40"
       }`}>{n}</span>
       <span className={`swr-meta ${active ? "text-charcoal" : "text-charcoal/40"}`}>{label}</span>
     </div>

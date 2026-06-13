@@ -85,12 +85,12 @@ function Tip({
 }) {
   return (
     <div className="grid grid-cols-[auto_1fr] gap-4 md:gap-6 items-start border-b border-[var(--hairline)] pb-10 last:border-b-0 last:pb-0">
-      <span className="font-script text-[44px] md:text-[56px] leading-none text-gold">
+      <span className="font-serif italic text-[40px] md:text-[52px] leading-none text-gold-soft">
         {n}
       </span>
       <div>
         <div className="flex items-center gap-2 mb-2">
-          <Icon name={icon} size={14} className="text-charcoal/55" />
+          <Icon name={icon} size={14} className="text-gold" />
           <h3 className="swr-h4">{title}</h3>
         </div>
         <p className="font-sans text-[14px] md:text-[15px] leading-relaxed text-charcoal/70 max-w-[520px]">

@@ -26,7 +26,7 @@ export const PHOTOS = {
   earringModel: u("1573408301185-9146fe634ad0", 1200),
 
   // Collection 1 — softer lifestyle shot (e.g. Birthday → Letters).
-  collection1: u("1602173574767-37ac01994b2c", 1200),
+  collection1: u("1515562141207-7a88fb7ce338", 1200),
 
   // Collection 2 — softer lifestyle shot (e.g. Summer → Keepsake).
   collection2: u("1611085583191-a3b181a88401", 1200),

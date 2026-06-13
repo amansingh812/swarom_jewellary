@@ -1,18 +1,19 @@
 import type { Metadata, Viewport } from "next";
-import { Cormorant_Garamond, Montserrat, Great_Vibes } from "next/font/google";
+import { Playfair_Display, Literata, Great_Vibes } from "next/font/google";
 import "./globals.css";
 
-const serif = Cormorant_Garamond({
+const serif = Playfair_Display({
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600"],
+  weight: ["400", "500", "600", "700"],
   style: ["normal", "italic"],
   variable: "--font-serif",
   display: "swap",
 });
 
-const sans = Montserrat({
+const sans = Literata({
   subsets: ["latin"],
-  weight: ["200", "300", "400", "500", "600"],
+  weight: ["300", "400", "500", "600"],
+  style: ["normal", "italic"],
   variable: "--font-sans",
   display: "swap",
 });
@@ -51,7 +52,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#F6F1EA",
+  themeColor: "#FFF8F2",
   width: "device-width",
   initialScale: 1,
 };

@@ -87,7 +87,7 @@ export default async function AdminDashboard() {
 
 function StatCard({ label, value }: { label: string; value: string }) {
   return (
-    <div className="rounded-xl border border-[var(--hairline)] bg-cream-50 p-5">
+    <div className="border border-[var(--hairline)] border-t-2 border-t-gold-soft bg-cream-50 p-5">
       <div className="swr-meta text-charcoal/55 mb-1">{label}</div>
       <div className="swr-price-lg">{value}</div>
     </div>
