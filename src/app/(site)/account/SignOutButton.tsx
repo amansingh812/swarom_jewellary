@@ -1,25 +1,27 @@
 "use client";
 
-import { useRouter } from "next/navigation";
-import { useAuth } from "@/lib/auth/AuthProvider";
+import { useState } from "react";
 import { Icon } from "@/components/ui/Icon";
 
 export function SignOutButton() {
-  const router = useRouter();
-  const { signOut } = useAuth();
+  const [loading, setLoading] = useState(false);
 
   async function onClick() {
-    await signOut();
-    router.push("/");
-    router.refresh();
+    setLoading(true);
+    // POST to the server-side route — it clears SSR cookies and redirects.
+    // A hard navigation after ensures no stale RSC payload is served.
+    await fetch("/auth/signout", { method: "POST", credentials: "include", redirect: "manual" });
+    window.location.href = "/";
   }
 
   return (
     <button
       onClick={onClick}
-      className="swr-meta text-charcoal/65 hover:text-oxide flex items-center gap-2 transition-colors"
+      disabled={loading}
+      className="swr-meta text-charcoal/65 hover:text-oxide flex items-center gap-2 transition-colors disabled:opacity-50"
     >
-      <Icon name="arrow-right" size={12} /> Sign out
+      <Icon name="arrow-right" size={12} />
+      {loading ? "Signing out…" : "Sign out"}
     </button>
   );
 }

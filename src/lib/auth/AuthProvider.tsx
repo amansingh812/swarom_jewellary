@@ -14,9 +14,11 @@ interface AuthContextValue {
 const AuthContext = createContext<AuthContextValue | null>(null);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
+  // Stable client instance — must not be recreated on every render or the
+  // useEffect dependency changes every cycle, causing infinite re-subscription.
+  const [supabase] = useState(() => createBrowserSupabaseClient());
   const [session, setSession] = useState<Session | null>(null);
   const [loading, setLoading] = useState(true);
-  const supabase = createBrowserSupabaseClient();
 
   useEffect(() => {
     let mounted = true;
@@ -35,7 +37,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, [supabase]);
 
   async function signOut() {
-    await supabase.auth.signOut();
+    // Delegate to the server-side route which clears the SSR cookies properly.
+    await fetch("/auth/signout", { method: "POST", credentials: "include" });
     setSession(null);
   }
 
