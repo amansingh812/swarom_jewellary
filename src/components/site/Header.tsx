@@ -47,15 +47,15 @@ export function Header() {
         {/* Announcement strip */}
         <div className="bg-charcoal text-cream">
           <div className="mx-auto flex max-w-marketing items-center justify-center gap-3 overflow-x-auto px-4 py-2 no-scrollbar sm:gap-4 sm:px-6">
-            <span className="swr-meta whitespace-nowrap text-cream/90">
+            <span className="swr-meta whitespace-nowrap !text-cream">
               Free shipping across India
             </span>
-            <span aria-hidden className="text-gold-soft/60">·</span>
-            <span className="swr-meta whitespace-nowrap text-cream/90">
+            <span aria-hidden className="text-gold-soft">·</span>
+            <span className="swr-meta whitespace-nowrap !text-cream">
               Made to order in Bengaluru
             </span>
-            <span aria-hidden className="text-gold-soft/60 hidden sm:inline">·</span>
-            <span className="swr-meta whitespace-nowrap text-cream/90 hidden sm:inline">
+            <span aria-hidden className="text-gold-soft">·</span>
+            <span className="swr-meta whitespace-nowrap !text-cream">
               30-day returns
             </span>
           </div>

@@ -10,8 +10,8 @@ const u = (id: string, w = 1400) =>
   `https://images.unsplash.com/photo-${id}?w=${w}&q=80&auto=format&fit=crop`;
 
 export const PHOTOS = {
-  // Hero — woman with rings on hand near lips/face. Warm tones.
-  hero: u("1599643478518-a784e5dc4c8f", 1800),
+  // Hero — model wearing personalized name necklace.
+  hero: "/products/hero-model.png",
 
   // Model wearing pendant on neck.
   pendantModel: u("1535632787350-4e68ef0ac584", 1200),
