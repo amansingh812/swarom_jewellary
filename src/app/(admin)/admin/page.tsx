@@ -12,24 +12,39 @@ export default async function AdminDashboard() {
   if (configured) {
     const supabase = createServerSupabaseClient();
     type OrderRow = { id: string; created_at: string; total: number; status: string };
-    const [{ count: productCount }, { count: orderCount }, { count: customerCount }, ordersRes] =
-      await Promise.all([
-        supabase.from("products").select("*", { count: "exact", head: true }),
-        supabase.from("orders").select("*", { count: "exact", head: true }),
-        supabase.from("profiles").select("*", { count: "exact", head: true }),
-        supabase
-          .from("orders")
-          .select("id, created_at, total, status")
-          .order("created_at", { ascending: false })
-          .limit(5)
-          .returns<OrderRow[]>(),
-      ]);
+    // Revenue counts every order that actually earned money — not just the
+    // five shown below, and never a cancelled or refunded one.
+    const EARNED = ["paid", "in_production", "shipped", "delivered"];
+
+    const [
+      { count: productCount },
+      { count: orderCount },
+      { count: customerCount },
+      ordersRes,
+      earnedRes,
+    ] = await Promise.all([
+      supabase.from("products").select("*", { count: "exact", head: true }),
+      supabase.from("orders").select("*", { count: "exact", head: true }),
+      supabase.from("profiles").select("*", { count: "exact", head: true }),
+      supabase
+        .from("orders")
+        .select("id, created_at, total, status")
+        .order("created_at", { ascending: false })
+        .limit(5)
+        .returns<OrderRow[]>(),
+      supabase
+        .from("orders")
+        .select("total")
+        .in("status", EARNED)
+        .returns<{ total: number }[]>(),
+    ]);
+
     const orders = ordersRes.data ?? [];
     stats = {
       products: productCount ?? 0,
       orders: orderCount ?? 0,
       customers: customerCount ?? 0,
-      revenue: orders.reduce((s, o) => s + (o.total ?? 0), 0),
+      revenue: (earnedRes.data ?? []).reduce((s, o) => s + (o.total ?? 0), 0),
     };
     recentOrders = orders;
   }
@@ -75,11 +90,8 @@ export default async function AdminDashboard() {
       </section>
 
       <Note>
-        <strong>Phase 2 scaffolding.</strong> This admin panel is a working
-        skeleton — auth-gated by the <code>profiles.role = &apos;admin&apos;</code> check
-        in the layout. CRUD pages for products, orders, customers, and the
-        newsletter are stubbed below. Build them out when you&apos;re ready to
-        run the studio from this screen instead of the Supabase dashboard.
+        Revenue counts orders marked paid, in production, shipped or delivered.
+        Pending, cancelled and refunded orders are excluded.
       </Note>
     </div>
   );

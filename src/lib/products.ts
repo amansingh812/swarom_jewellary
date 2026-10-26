@@ -278,6 +278,20 @@ export async function getProducts(opts?: {
     .order("created_at", { ascending: false });
   if (opts?.category && opts.category !== "all")
     query = query.eq("category", opts.category);
+
+  // Collections are addressed by slug in the URL but stored as a foreign key,
+  // so resolve the slug first. Previously this filter was silently ignored and
+  // /shop?collection=… returned the whole catalogue.
+  if (opts?.collection) {
+    const { data: col } = await supabase
+      .from("collections")
+      .select("id")
+      .eq("slug", opts.collection)
+      .maybeSingle();
+    if (!col) return [];
+    query = query.eq("collection_id", (col as { id: string }).id);
+  }
+
   if (opts?.limit) query = query.limit(opts.limit);
   const { data, error } = await query;
   if (error) {
@@ -304,4 +318,38 @@ export async function getProduct(slug: string): Promise<Product | null> {
     return null;
   }
   return data;
+}
+
+export interface CollectionSummary {
+  id: string;
+  slug: string;
+  name: string;
+  description: string | null;
+}
+
+/**
+ * Collections for the storefront. Falls back to the hardcoded list above when
+ * Supabase isn't configured, so the site still renders in a bare checkout.
+ */
+export async function getCollections(): Promise<CollectionSummary[]> {
+  if (!supabaseConfigured()) {
+    return COLLECTIONS.map((c) => ({
+      id: c.slug,
+      slug: c.slug,
+      name: c.name,
+      description: c.description,
+    }));
+  }
+  const { createServerSupabaseClient } = await import("@/lib/supabase/server");
+  const supabase = createServerSupabaseClient();
+  const { data, error } = await supabase
+    .from("collections")
+    .select("id, slug, name, description")
+    .order("position", { ascending: true })
+    .returns<CollectionSummary[]>();
+  if (error) {
+    console.error("getCollections error", error);
+    return [];
+  }
+  return data ?? [];
 }
