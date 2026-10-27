@@ -1,40 +1,36 @@
 /**
- * Centralized list of placeholder Unsplash photos used across the home page.
- * Swap these for real Swarom product / lifestyle photography when available.
+ * Brand and placeholder imagery.
  *
- * Each photo is sourced from Unsplash (free use under the Unsplash License).
- * Format: `https://images.unsplash.com/photo-{id}?w={w}&q=80&auto=format&fit=crop`
+ * Product photographs live in Cloudinary and are delivered through the
+ * next/image custom loader, which appends `f_auto,q_auto,w_<width>` per
+ * breakpoint. The URLs below are stored plain — never add a transformation
+ * segment by hand, the loader does it.
+ *
+ * The Unsplash stills are still placeholders for the social gallery and
+ * should go when real photography replaces them.
  */
+
+const CLOUD = "https://res.cloudinary.com/drygcfes5/image/upload";
 
 const u = (id: string, w = 1400) =>
   `https://images.unsplash.com/photo-${id}?w=${w}&q=80&auto=format&fit=crop`;
 
 export const PHOTOS = {
-  // Hero — model wearing personalized name necklace.
-  hero: "/products/hero-model.png",
+  // ── Swarom's own, on Cloudinary ────────────────────────────
+  hero: `${CLOUD}/v1793116164/swarom/brand/hero-model.png`,
+  pendant: `${CLOUD}/v1793116158/swarom/products/real-pendant.jpg`,
+  ring: `${CLOUD}/v1793116160/swarom/products/real-ring.jpg`,
+  bracelet: `${CLOUD}/v1793116161/swarom/products/real-bracelet.jpg`,
+  anklet: `${CLOUD}/v1793116162/swarom/products/real-anklet.jpg`,
 
-  // Model wearing pendant on neck.
+  // ── placeholders, pending real photography ─────────────────
   pendantModel: u("1535632787350-4e68ef0ac584", 1200),
-
-  // Hand wearing rings — closeup.
   ringModel: u("1611591437281-460bfbe1220a", 1200),
-
-  // Wrist with bracelet.
   braceletModel: u("1611652022419-a9419f74343d", 1200),
-
-  // Earring closeup on model.
   earringModel: u("1573408301185-9146fe634ad0", 1200),
-
-  // Collection 1 — softer lifestyle shot (e.g. Birthday → Letters).
   collection1: u("1515562141207-7a88fb7ce338", 1200),
-
-  // Collection 2 — softer lifestyle shot (e.g. Summer → Keepsake).
   collection2: u("1611085583191-a3b181a88401", 1200),
-
-  // Must-have promo — big editorial.
   mustHave: u("1605100804763-247f67b3557e", 1600),
-
-  // 4-image Instagram gallery.
   gallery: [
     u("1581605405669-fcdf81165afa", 800),
     u("1602751584552-8ba73aad10e1", 800),

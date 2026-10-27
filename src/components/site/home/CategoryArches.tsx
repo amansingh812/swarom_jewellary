@@ -1,13 +1,14 @@
 import Link from "next/link";
 import Image from "next/image";
 import { ArchFrame } from "@/components/ui/Ornament";
+import { PHOTOS } from "@/lib/photos";
 
 const CATEGORIES = [
-  { href: "/shop?cat=pendant", label: "Pendants", image: "/products/real-pendant.png" },
-  { href: "/shop?cat=ring", label: "Rings", image: "/products/real-ring.png" },
-  { href: "/shop?cat=bracelet", label: "Bracelets", image: "/products/real-bracelet.png" },
-  { href: "/shop?cat=anklet", label: "Anklets", image: "/products/real-anklet.png" },
-  { href: "/shop?cat=for-two", label: "For Two", image: "/products/real-pendant.png" },
+  { href: "/shop?cat=pendant", label: "Pendants", image: PHOTOS.pendant },
+  { href: "/shop?cat=ring", label: "Rings", image: PHOTOS.ring },
+  { href: "/shop?cat=bracelet", label: "Bracelets", image: PHOTOS.bracelet },
+  { href: "/shop?cat=anklet", label: "Anklets", image: PHOTOS.anklet },
+  { href: "/shop?cat=for-two", label: "For Two", image: PHOTOS.pendant },
 ];
 
 /**

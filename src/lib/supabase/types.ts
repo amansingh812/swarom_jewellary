@@ -34,6 +34,28 @@ export interface CollectionRow {
   created_at: string;
 }
 
+export type MetalKind =
+  | "silver_925"
+  | "gold_14k"
+  | "gold_18k"
+  | "gold_22k"
+  | "gold_24k";
+
+export interface MetalRateRow {
+  id: string;
+  metal: MetalKind;
+  rate_per_gram: number;
+  effective_from: string;
+  note: string | null;
+  created_at: string;
+}
+
+export interface StoreSettingRow {
+  key: string;
+  value: Json;
+  updated_at: string;
+}
+
 export interface ProductRow {
   id: string;
   slug: string;
@@ -41,9 +63,33 @@ export interface ProductRow {
   modifier: string | null;
   description: string | null;
   collection_id: string | null;
-  category: "pendant" | "ring" | "bracelet" | "anklet" | "for-two";
-  price: number;                // rupees
+  category:
+    | "pendant"
+    | "ring"
+    | "bracelet"
+    | "anklet"
+    | "for-two"
+    | "necklace"
+    | "haram"
+    | "earrings"
+    | "bangle"
+    | "mangalsutra";
+  price: number;                // rupees — a CACHE when pricing_mode is weight_based
   compare_at_price: number | null;
+
+  // ── gold line (migration 002) ────────────────────────────────
+  metal: MetalKind;
+  pricing_mode: "fixed" | "weight_based";
+  gross_weight: number | null;  // grams, finished piece
+  net_weight: number | null;    // grams of metal, excluding stones
+  wastage_pct: number;
+  making_charge_type: "per_gram" | "percentage" | "flat";
+  making_charge_value: number;
+  stone_charges: number;        // rupees
+  stone_details: Json;          // [{ type, count, weight, unit }]
+  hallmark_huid: string | null; // BIS HUID, per physical piece
+  supplier_code: string | null;
+  price_updated_at: string | null;
   status: "draft" | "active" | "archived";
   meta: string | null;          // "925 silver · engraved"
   image_main: string | null;
@@ -105,6 +151,12 @@ export interface OrderItemRow {
   unit_price: number;
   quantity: number;
   options: Json;
+
+  // ── frozen at purchase, so a refund months later is unarguable ──
+  metal: MetalKind | null;
+  net_weight: number | null;
+  rate_per_gram: number | null;
+  price_breakdown: Json;
 }
 
 export interface WishlistRow {
@@ -156,6 +208,19 @@ export interface Database {
           price: number;
         } & Partial<Omit<ProductRow, "slug" | "name" | "category" | "price">>;
         Update: Partial<Omit<ProductRow, "id">>;
+      };
+      metal_rates: {
+        Row: MetalRateRow;
+        Insert: {
+          metal: MetalKind;
+          rate_per_gram: number;
+        } & Partial<Omit<MetalRateRow, "metal" | "rate_per_gram">>;
+        Update: Partial<Omit<MetalRateRow, "id">>;
+      };
+      store_settings: {
+        Row: StoreSettingRow;
+        Insert: { key: string; value: Json } & Partial<StoreSettingRow>;
+        Update: Partial<StoreSettingRow>;
       };
       addresses: {
         Row: AddressRow;

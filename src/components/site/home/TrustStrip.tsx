@@ -1,51 +1,28 @@
 import { Icon, IconName } from "@/components/ui/Icon";
 
-interface Badge {
-  icon: IconName;
-  title: string;
-  body: string;
-}
-
-const BADGES: Badge[] = [
-  {
-    icon: "truck",
-    title: "Free shipping",
-    body: "On every order across India. Bluedart / DTDC, tracked.",
-  },
-  {
-    icon: "shield",
-    title: "30-day returns",
-    body: "Including engraved pieces. We want it right for you.",
-  },
-  {
-    icon: "stamp",
-    title: "Hallmarked 925",
-    body: "Pure sterling silver, hallmarked with the year it was made.",
-  },
+const POINTS: { icon: IconName; label: string; note: string }[] = [
+  { icon: "stamp", label: "BIS hallmarked", note: "Every piece stamped 925" },
+  { icon: "sparkle", label: "Made in Bengaluru", note: "By hand, to order" },
+  { icon: "truck", label: "Free shipping", note: "Everywhere in India" },
+  { icon: "check", label: "15-day returns", note: "On unengraved pieces" },
+  { icon: "whatsapp", label: "Ask us anything", note: "Sizing, gifting, care" },
 ];
 
-/**
- * Three-up trust badges row, hairline icons, no shadows.
- * Sits above the Image Gallery and Newsletter.
- */
+/** The proof line under the hero — five short claims, hairline icons, no badges. */
 export function TrustStrip() {
   return (
-    <section className="border-y border-silver/40 py-12 md:py-16 bg-cream">
-      <div className="mx-auto max-w-marketing px-6 md:px-20">
-        <div className="grid grid-cols-1 gap-10 md:grid-cols-3 md:gap-12">
-          {BADGES.map((b) => (
-            <div key={b.title} className="flex flex-col items-center gap-3 text-center">
-              <span className="text-gold" aria-hidden>
-                <Icon name={b.icon} size={22} />
-              </span>
-              <h3 className="swr-eyebrow !text-charcoal">{b.title}</h3>
-              <p className="font-sans text-[13px] leading-relaxed text-charcoal-700 max-w-[280px] m-0">
-                {b.body}
-              </p>
-            </div>
-          ))}
-        </div>
-      </div>
+    <section className="border-y border-silver/40 bg-cream-100">
+      <ul className="mx-auto m-0 grid max-w-marketing list-none grid-cols-2 gap-8 px-6 py-10 md:grid-cols-5 md:gap-6 md:px-10 md:py-9 lg:px-20">
+        {POINTS.map((p) => (
+          <li key={p.label} className="flex flex-col items-center gap-2.5 text-center">
+            <Icon name={p.icon} size={22} className="text-gold" />
+            <span className="swr-meta text-charcoal">{p.label}</span>
+            <span className="font-sans text-[12px] leading-relaxed text-charcoal-700">
+              {p.note}
+            </span>
+          </li>
+        ))}
+      </ul>
     </section>
   );
 }

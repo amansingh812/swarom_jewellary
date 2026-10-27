@@ -1,4 +1,5 @@
 import type { Product } from "@/lib/supabase/types";
+import { PHOTOS } from "@/lib/photos";
 
 /**
  * Mock product catalog used when Supabase isn't configured yet.
@@ -9,7 +10,42 @@ import type { Product } from "@/lib/supabase/types";
 
 const now = new Date().toISOString();
 
-export const MOCK_PRODUCTS: Product[] = [
+/**
+ * Every mock piece is silver and fixed-price. The gold columns added in
+ * migration 002 are defaulted once here rather than repeated per entry.
+ */
+const SILVER_DEFAULTS: Pick<
+  Product,
+  | "metal"
+  | "pricing_mode"
+  | "gross_weight"
+  | "net_weight"
+  | "wastage_pct"
+  | "making_charge_type"
+  | "making_charge_value"
+  | "stone_charges"
+  | "stone_details"
+  | "hallmark_huid"
+  | "supplier_code"
+  | "price_updated_at"
+> = {
+  metal: "silver_925",
+  pricing_mode: "fixed",
+  gross_weight: null,
+  net_weight: null,
+  wastage_pct: 0,
+  making_charge_type: "per_gram",
+  making_charge_value: 0,
+  stone_charges: 0,
+  stone_details: [],
+  hallmark_huid: null,
+  supplier_code: null,
+  price_updated_at: null,
+};
+
+type SilverSeed = Omit<Product, keyof typeof SILVER_DEFAULTS>;
+
+const MOCK_SEED: SilverSeed[] = [
   {
     id: "p-pendant-hand",
     slug: "pendant-in-your-hand",
@@ -23,8 +59,8 @@ export const MOCK_PRODUCTS: Product[] = [
     compare_at_price: null,
     status: "active",
     meta: "925 silver · engraved",
-    image_main: "/products/real-pendant.png",
-    images: ["/products/real-pendant.png", "/products/real-bracelet.png", "/products/real-ring.png"],
+    image_main: PHOTOS.pendant,
+    images: [PHOTOS.pendant, PHOTOS.bracelet, PHOTOS.ring],
     options: {
       engraving: { type: "text", max: 12, label: "Engraving" },
       chain: {
@@ -51,8 +87,8 @@ export const MOCK_PRODUCTS: Product[] = [
     compare_at_price: null,
     status: "active",
     meta: "925 silver · date",
-    image_main: "/products/real-ring.png",
-    images: ["/products/real-ring.png", "/products/real-pendant.png"],
+    image_main: PHOTOS.ring,
+    images: [PHOTOS.ring, PHOTOS.pendant],
     options: {
       engraving: { type: "text", max: 10, label: "Date or initials" },
       size: {
@@ -79,8 +115,8 @@ export const MOCK_PRODUCTS: Product[] = [
     compare_at_price: null,
     status: "active",
     meta: "925 silver · initial",
-    image_main: "/products/real-bracelet.png",
-    images: ["/products/real-bracelet.png", "/products/real-pendant.png"],
+    image_main: PHOTOS.bracelet,
+    images: [PHOTOS.bracelet, PHOTOS.pendant],
     options: {
       engraving: { type: "text", max: 3, label: "Initial" },
       length: {
@@ -107,8 +143,8 @@ export const MOCK_PRODUCTS: Product[] = [
     compare_at_price: null,
     status: "active",
     meta: "925 silver · double",
-    image_main: "/products/real-pendant.png",
-    images: ["/products/real-pendant.png", "/products/real-bracelet.png"],
+    image_main: PHOTOS.pendant,
+    images: [PHOTOS.pendant, PHOTOS.bracelet],
     options: {
       engraving_a: { type: "text", max: 10, label: "First name" },
       engraving_b: { type: "text", max: 10, label: "Second name" },
@@ -135,8 +171,8 @@ export const MOCK_PRODUCTS: Product[] = [
     compare_at_price: null,
     status: "active",
     meta: "925 silver · letter",
-    image_main: "/products/real-pendant.png",
-    images: ["/products/real-pendant.png"],
+    image_main: PHOTOS.pendant,
+    images: [PHOTOS.pendant],
     options: {
       engraving: { type: "text", max: 1, label: "Letter" },
       chain: {
@@ -162,8 +198,8 @@ export const MOCK_PRODUCTS: Product[] = [
     compare_at_price: null,
     status: "active",
     meta: "925 silver · name",
-    image_main: "/products/real-anklet.png",
-    images: ["/products/real-anklet.png"],
+    image_main: PHOTOS.anklet,
+    images: [PHOTOS.anklet],
     options: {
       engraving: { type: "text", max: 8, label: "Name" },
       length: {
@@ -189,8 +225,8 @@ export const MOCK_PRODUCTS: Product[] = [
     compare_at_price: null,
     status: "active",
     meta: "925 silver · pair",
-    image_main: "/products/real-ring.png",
-    images: ["/products/real-ring.png"],
+    image_main: PHOTOS.ring,
+    images: [PHOTOS.ring],
     options: {
       engraving: { type: "text", max: 6, label: "Word or word" },
       size: {
@@ -216,8 +252,8 @@ export const MOCK_PRODUCTS: Product[] = [
     compare_at_price: null,
     status: "active",
     meta: "925 silver · locket",
-    image_main: "/products/real-pendant.png",
-    images: ["/products/real-pendant.png"],
+    image_main: PHOTOS.pendant,
+    images: [PHOTOS.pendant],
     options: {
       engraving: { type: "text", max: 16, label: "On the back" },
       chain: {
@@ -232,6 +268,11 @@ export const MOCK_PRODUCTS: Product[] = [
     updated_at: now,
   },
 ];
+
+export const MOCK_PRODUCTS: Product[] = MOCK_SEED.map((p) => ({
+  ...SILVER_DEFAULTS,
+  ...p,
+}));
 
 export const COLLECTIONS = [
   { slug: "everyday", name: "The Everyday", description: "What you wear every day, with a name hidden where only you can find it." },
