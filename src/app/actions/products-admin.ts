@@ -7,6 +7,7 @@ import {
   isSupabaseConfigured,
 } from "@/lib/supabase/server";
 import { requireAdmin } from "@/lib/auth/server";
+import { slugify } from "@/lib/slug";
 
 export interface ProductInput {
   id?: string;
@@ -24,14 +25,6 @@ export interface ProductInput {
   images?: string[];
   options?: Record<string, unknown>;
   inventory?: number | null;
-}
-
-function slugify(s: string) {
-  return s
-    .toLowerCase()
-    .trim()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/(^-|-$)+/g, "");
 }
 
 function validate(p: ProductInput): string | null {

@@ -8,8 +8,8 @@ import {
   saveCollection,
   deleteCollection,
   reorderCollections,
-  slugify,
 } from "@/app/actions/collections-admin";
+import { slugify } from "@/lib/slug";
 
 export interface CollectionRowView {
   id: string;

@@ -6,6 +6,7 @@ import {
   isSupabaseConfigured,
 } from "@/lib/supabase/server";
 import { requireAdmin } from "@/lib/auth/server";
+import { slugify } from "@/lib/slug";
 
 export interface CollectionInput {
   id?: string;
@@ -19,14 +20,6 @@ export interface CollectionResult {
   ok: boolean;
   id?: string;
   message?: string;
-}
-
-export function slugify(s: string) {
-  return s
-    .toLowerCase()
-    .trim()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/(^-|-$)+/g, "");
 }
 
 function validate(c: CollectionInput): string | null {

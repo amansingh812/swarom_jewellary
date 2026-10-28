@@ -13,6 +13,7 @@ import {
   deleteProductImages,
 } from "@/app/actions/storage";
 import type { Product } from "@/lib/supabase/types";
+import { slugify } from "@/lib/slug";
 
 interface Props {
   product?: Product;
@@ -26,14 +27,6 @@ const CATEGORIES: ProductInput["category"][] = [
   "anklet",
   "for-two",
 ];
-
-function slugify(s: string) {
-  return s
-    .toLowerCase()
-    .trim()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/(^-|-$)+/g, "");
-}
 
 function keyify(s: string) {
   return s
