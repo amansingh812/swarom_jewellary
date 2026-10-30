@@ -1,20 +1,17 @@
 /**
- * next/image custom loader — Cloudinary.
+ * next/image custom loader.
  *
- * Registered in next.config.mjs as `images.loaderFile`. Because a custom
- * loader bypasses Vercel's image optimizer entirely, nothing here is metered
- * and /_next/image is never hit (that route is what was returning 402).
+ * Registered in next.config.mjs as `images.loaderFile`. A custom loader
+ * bypasses Vercel's image optimizer entirely, so /_next/image is never hit
+ * — that route is what was returning 402 and breaking every product card.
  *
  * This module is bundled for the browser, so it must not read server-only
- * env or import the Cloudinary SDK. It is pure string work: we store full
- * delivery URLs in the database, and this injects the transformation
- * segment Cloudinary expects.
+ * env or import the Cloudinary SDK. It is pure string work.
  *
- *   https://res.cloudinary.com/<cloud>/image/upload/v173.../swarom/products/x.jpg
- *                                          ^ transformations go here
- *
- * Anything that is not a Cloudinary delivery URL — local /public files,
- * Unsplash stills — is returned untouched and served as-is.
+ * Next.js requires a custom loader to USE the `width` it is given. If it
+ * doesn't, Next logs "has a loader property that does not implement width"
+ * and the image is served at one size to every device. So every host we
+ * know how to resize is handled explicitly below.
  */
 
 interface LoaderArgs {
@@ -23,26 +20,35 @@ interface LoaderArgs {
   quality?: number;
 }
 
-const MARKER = "/image/upload/";
+const CLOUDINARY_MARKER = "/image/upload/";
 
-export default function cloudinaryLoader({ src, width, quality }: LoaderArgs): string {
-  if (!src.includes("res.cloudinary.com")) return src;
+export default function imageLoader({ src, width, quality }: LoaderArgs): string {
+  // ── Cloudinary: our own product and brand photography ──────────
+  if (src.includes("res.cloudinary.com")) {
+    const at = src.indexOf(CLOUDINARY_MARKER);
+    if (at !== -1) {
+      const head = src.slice(0, at + CLOUDINARY_MARKER.length);
+      const tail = src.slice(at + CLOUDINARY_MARKER.length);
+      // f_auto  → WebP/AVIF where the browser supports it
+      // q_auto  → Cloudinary picks quality, unless we were given one
+      // c_limit → never upscale past the original
+      const t = ["f_auto", `q_${quality ?? "auto"}`, `w_${width}`, "c_limit"];
+      return `${head}${t.join(",")}/${tail}`;
+    }
+    return src;
+  }
 
-  const at = src.indexOf(MARKER);
-  if (at === -1) return src;
+  // ── Unsplash placeholders: resize via their own query params ───
+  if (src.includes("images.unsplash.com")) {
+    const url = new URL(src);
+    url.searchParams.set("w", String(width));
+    url.searchParams.set("q", String(quality ?? 80));
+    url.searchParams.set("auto", "format");
+    return url.toString();
+  }
 
-  const head = src.slice(0, at + MARKER.length);
-  const tail = src.slice(at + MARKER.length);
-
-  // f_auto  → WebP/AVIF where the browser supports it
-  // q_auto  → Cloudinary picks the quality, or we honour an explicit one
-  // c_limit → never upscale past the original
-  const transforms = [
-    "f_auto",
-    `q_${quality ?? "auto"}`,
-    `w_${width}`,
-    "c_limit",
-  ].join(",");
-
-  return `${head}${transforms}/${tail}`;
+  // ── Anything else (local /public files) ────────────────────────
+  // Nothing can resize these at request time. Mark such images
+  // `unoptimized` on the <Image> itself to keep Next quiet.
+  return src;
 }
