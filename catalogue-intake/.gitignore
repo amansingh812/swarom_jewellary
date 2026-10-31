@@ -8,5 +8,6 @@
 !upload.mjs
 !import.mjs
 !activate.mjs
+!publish-enquiry.mjs
 !migrate-to-cloudinary.mjs
 !run-sql.mjs

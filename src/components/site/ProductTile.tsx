@@ -50,7 +50,7 @@ export function ProductTile({ product, inWishlist = false }: ProductTileProps) {
           </h3>
           {product.meta && <span className="swr-meta">{product.meta}</span>}
           <span className="swr-price">
-            {product.status === "draft" || !product.price
+            {product.enquiry_only || product.status === "draft" || !product.price
               ? "Price on request"
               : formatINR(product.price)}
           </span>

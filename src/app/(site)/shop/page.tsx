@@ -8,6 +8,7 @@ import {
 } from "@/lib/products";
 import { getWishlistProductIds } from "@/app/actions/wishlist";
 import { Icon } from "@/components/ui/Icon";
+import { contactHref } from "@/lib/contact";
 
 interface ShopPageProps {
   searchParams: {
@@ -19,7 +20,8 @@ interface ShopPageProps {
 
 export const metadata = {
   title: "Shop",
-  description: "All Swarom pieces. Each one personalized — a name, a date, a small mark.",
+  description:
+    "All Swarom pieces — personalised 925 sterling silver, and the temple collection in gold.",
 };
 
 /* Staggered lookbook offsets, repeating every 3 tiles on xl. */
@@ -47,9 +49,9 @@ export default async function ShopPage({ searchParams }: ShopPageProps) {
       <header className="flex flex-col items-center text-center gap-5 mb-14 md:mb-24 max-w-3xl mx-auto">
         <h1 className="swr-display !text-gold">The Collection</h1>
         <p className="swr-lede">
-          Discover our personalized 925 sterling silver pieces — each one
-          carrying a name, a date, a small mark. Made to order in Bengaluru,
-          made to be as enduring as what it remembers.
+          Personalised 925 sterling silver, and a temple collection in gold —
+          Lakshmi, the peacock, the mango leaf, worked the way the old panels
+          were. Made and finished in Bengaluru.
         </p>
       </header>
 
@@ -99,7 +101,7 @@ export default async function ShopPage({ searchParams }: ShopPageProps) {
                   name, a date, a word — we&apos;ll sketch it by hand.
                 </p>
                 <Link
-                  href="https://wa.me/919999999999"
+                  href={contactHref("Hi Swarom, I'd like to commission a piece.")}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-block swr-eyebrow border-b border-gold pb-1 hover:opacity-70 transition-opacity"

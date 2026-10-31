@@ -7,6 +7,7 @@ import { formatINR } from "@/lib/money";
 import { Eyebrow } from "@/components/ui/Eyebrow";
 import { Button, ButtonLink } from "@/components/ui/Button";
 import { Icon } from "@/components/ui/Icon";
+import { contactHref } from "@/lib/contact";
 
 export function Cart() {
   const { lines, remove, updateQty, subtotal, count, ready } = useCart();
@@ -156,7 +157,7 @@ export function Cart() {
             <RowLine icon="truck">Free shipping across India</RowLine>
             <RowLine icon="whatsapp">
               <a
-                href="https://wa.me/919999999999"
+                href={contactHref()}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="underline-offset-2 hover:underline"

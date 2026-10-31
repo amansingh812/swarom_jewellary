@@ -64,7 +64,7 @@ export async function createOrder(
   const productIds = input.lines.map((l) => l.productId);
   const { data: products, error: prodErr } = await supabase
     .from("products")
-    .select("id, name, modifier, image_main, price, status")
+    .select("id, name, modifier, image_main, price, status, enquiry_only")
     .in("id", productIds);
   if (prodErr || !products) {
     return { ok: false, message: prodErr?.message ?? "Could not load products." };
@@ -97,7 +97,21 @@ export async function createOrder(
         message: `"${p.name}" is no longer available.`,
       };
     }
+    // An enquiry-only piece has no confirmed weight or purity, so it has no
+    // price. It must never reach an order, whatever the client sent.
+    if (p.enquiry_only) {
+      return {
+        ok: false,
+        message: `"${p.name}" is available on enquiry only. Please remove it and message us about it instead.`,
+      };
+    }
     const unit = p.price as number;
+    if (!(unit > 0)) {
+      return {
+        ok: false,
+        message: `"${p.name}" is not priced yet.`,
+      };
+    }
     subtotal += unit * line.quantity;
     itemRows.push({
       product_id: p.id as string,

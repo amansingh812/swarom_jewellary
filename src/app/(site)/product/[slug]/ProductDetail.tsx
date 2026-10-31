@@ -4,7 +4,8 @@ import { useState } from "react";
 import Image from "next/image";
 import { Eyebrow } from "@/components/ui/Eyebrow";
 import { Icon } from "@/components/ui/Icon";
-import { Button } from "@/components/ui/Button";
+import { enquiryHref, enquiryLabel } from "@/lib/contact";
+import { Button, ButtonLink } from "@/components/ui/Button";
 import { Pill } from "@/components/ui/Pill";
 import { useCart } from "@/lib/cart/CartProvider";
 import { formatINR } from "@/lib/money";
@@ -175,9 +176,21 @@ export function ProductDetail({ product, initialInWishlist = false }: ProductDet
           {/* CTA row (desktop) */}
           <div className="hidden md:flex flex-col gap-3 mt-3">
             <div className="flex gap-2">
-              <Button onClick={addToBag} variant="primary" size="lg" block disabled={adding} className="flex-1">
-                {adding ? "Adding…" : `Add to bag — ${formatINR(product.price)}`}
-              </Button>
+              {product.enquiry_only ? (
+                <ButtonLink
+                  href={enquiryHref(`${product.name} ${product.modifier ?? ""}`.trim())}
+                  variant="primary"
+                  size="lg"
+                  block
+                  className="flex-1"
+                >
+                  {enquiryLabel()}
+                </ButtonLink>
+              ) : (
+                <Button onClick={addToBag} variant="primary" size="lg" block disabled={adding} className="flex-1">
+                  {adding ? "Adding…" : `Add to bag — ${formatINR(product.price)}`}
+                </Button>
+              )}
               <WishlistButton
                 productId={product.id}
                 initialInWishlist={initialInWishlist}
@@ -185,37 +198,73 @@ export function ProductDetail({ product, initialInWishlist = false }: ProductDet
                 redirectAfter={`/product/${product.slug}`}
               />
             </div>
-            <a
-              href={`https://wa.me/919999999999?text=Hi%20Swarom%2C%20I%27d%20like%20to%20ask%20about%20${encodeURIComponent(product.name + " " + (product.modifier ?? ""))}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="self-center swr-meta text-charcoal border-b border-[var(--hairline)] py-2 hover:border-charcoal flex items-center gap-2"
-            >
-              <Icon name="whatsapp" size={12} /> Ask on WhatsApp
-            </a>
+            {!product.enquiry_only && (
+              <a
+                href={enquiryHref(`${product.name} ${product.modifier ?? ""}`.trim())}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="self-center swr-meta text-charcoal border-b border-[var(--hairline)] py-2 hover:border-charcoal flex items-center gap-2"
+              >
+                <Icon name="whatsapp" size={12} /> Ask a question
+              </a>
+            )}
           </div>
 
           {/* Trust bullets */}
           <ul className="list-none p-0 m-0 mt-4 flex flex-col gap-2.5">
-            <Bullet icon="stamp">Hallmarked 925 sterling silver</Bullet>
-            <Bullet icon="truck">Free shipping across India</Bullet>
-            <Bullet icon="shield">30-day return — engraved pieces included</Bullet>
+            {product.enquiry_only ? (
+              <>
+                <Bullet icon="stamp">
+                  Weight, purity and stones confirmed on enquiry
+                </Bullet>
+                <Bullet icon="truck">Free shipping across India</Bullet>
+                <Bullet icon="shield">Priced at the day&apos;s gold rate</Bullet>
+              </>
+            ) : (
+              <>
+                <Bullet icon="stamp">Hallmarked 925 sterling silver</Bullet>
+                <Bullet icon="truck">Free shipping across India</Bullet>
+                <Bullet icon="shield">30-day return — engraved pieces included</Bullet>
+              </>
+            )}
           </ul>
 
           {/* Accordions */}
-          <Accordion title="Details & care">
-            Wipe with the cotton cloth that comes in your box. Avoid perfume and pool
-            water. Silver darkens with time — that&apos;s the patina; rub it lightly to
-            bring back the shine.
-          </Accordion>
-          <Accordion title="How it’s made">
-            Each piece is cast individually from your engraving, then hand-finished and
-            polished. We mark every pendant with the year it was made.
-          </Accordion>
-          <Accordion title="Shipping">
-            Made to order in our Bengaluru studio. Ready to ship within 10 days. Free
-            shipping across India via DTDC / Bluedart.
-          </Accordion>
+          {product.enquiry_only ? (
+            <>
+              <Accordion title="Details & care">
+                Store it in the pouch it comes in, away from perfume and pool water.
+                Wipe with a dry cotton cloth after wearing. Have the stone settings
+                checked once a year.
+              </Accordion>
+              <Accordion title="Why there is no price">
+                Gold is priced on the day&apos;s rate against the net weight of the
+                piece, so a fixed figure here would be out of date within a day. Ask
+                us and we will quote the metal, making and stones separately, with
+                the weight and purity in writing.
+              </Accordion>
+              <Accordion title="Shipping">
+                Free insured shipping across India. Ask about delivery time when you
+                enquire — it depends on what is in stock at the bench.
+              </Accordion>
+            </>
+          ) : (
+            <>
+              <Accordion title="Details & care">
+                Wipe with the cotton cloth that comes in your box. Avoid perfume and
+                pool water. Silver darkens with time — that&apos;s the patina; rub it
+                lightly to bring back the shine.
+              </Accordion>
+              <Accordion title="How it’s made">
+                Each piece is cast individually from your engraving, then hand-finished
+                and polished. We mark every pendant with the year it was made.
+              </Accordion>
+              <Accordion title="Shipping">
+                Made to order in our Bengaluru studio. Ready to ship within 10 days.
+                Free shipping across India via DTDC / Bluedart.
+              </Accordion>
+            </>
+          )}
         </aside>
       </div>
 
@@ -223,11 +272,24 @@ export function ProductDetail({ product, initialInWishlist = false }: ProductDet
       <div className="md:hidden fixed inset-x-0 bottom-0 z-30 bg-cream/95 backdrop-blur-sm border-t border-[var(--hairline)] px-4 py-3 flex items-center gap-3">
         <div className="flex flex-col">
           <span className="swr-meta text-charcoal/55">{product.name}</span>
-          <span className="swr-price-lg text-[18px]">{formatINR(product.price)}</span>
+          <span className="swr-price-lg text-[18px]">
+            {product.enquiry_only ? "Price on request" : formatINR(product.price)}
+          </span>
         </div>
-        <Button onClick={addToBag} variant="primary" size="lg" disabled={adding} className="flex-1">
-          {adding ? "Adding…" : "Add to bag"}
-        </Button>
+        {product.enquiry_only ? (
+          <ButtonLink
+            href={enquiryHref(`${product.name} ${product.modifier ?? ""}`.trim())}
+            variant="primary"
+            size="lg"
+            className="flex-1"
+          >
+            {enquiryLabel()}
+          </ButtonLink>
+        ) : (
+          <Button onClick={addToBag} variant="primary" size="lg" disabled={adding} className="flex-1">
+            {adding ? "Adding…" : "Add to bag"}
+          </Button>
+        )}
       </div>
     </>
   );

@@ -91,6 +91,7 @@ export interface ProductRow {
   supplier_code: string | null;
   price_updated_at: string | null;
   status: "draft" | "active" | "archived";
+  enquiry_only: boolean;
   meta: string | null;          // "925 silver · engraved"
   image_main: string | null;
   images: string[];

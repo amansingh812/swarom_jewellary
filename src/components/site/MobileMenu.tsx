@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { Icon } from "@/components/ui/Icon";
 import { ShimmerLine } from "@/components/ui/ShimmerLine";
+import { contactHref } from "@/lib/contact";
 
 interface MobileMenuProps {
   open: boolean;
@@ -64,7 +65,7 @@ export function MobileMenu({ open, onClose, links }: MobileMenuProps) {
             <Icon name="heart" size={14} /> Wishlist
           </Link>
           <a
-            href="https://wa.me/919999999999"
+            href={contactHref()}
             target="_blank"
             rel="noopener noreferrer"
             className="swr-meta text-charcoal flex items-center gap-2"

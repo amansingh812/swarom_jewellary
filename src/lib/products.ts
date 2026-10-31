@@ -28,7 +28,9 @@ const SILVER_DEFAULTS: Pick<
   | "hallmark_huid"
   | "supplier_code"
   | "price_updated_at"
+  | "enquiry_only"
 > = {
+  enquiry_only: false,
   metal: "silver_925",
   pricing_mode: "fixed",
   gross_weight: null,

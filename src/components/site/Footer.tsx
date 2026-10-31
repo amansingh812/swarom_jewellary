@@ -4,6 +4,7 @@ import Link from "next/link";
 import { FormEvent, useState, useTransition } from "react";
 import { Icon } from "@/components/ui/Icon";
 import { subscribeNewsletter } from "@/app/actions/newsletter";
+import { contactHref } from "@/lib/contact";
 
 export function Footer() {
   const [email, setEmail] = useState("");
@@ -34,7 +35,7 @@ export function Footer() {
             Swarom
           </div>
           <p className="font-serif italic text-[17px] leading-relaxed mt-4 max-w-[300px] text-cream/70">
-            Personalized 925 sterling silver, handcrafted in Bengaluru.
+            Personalised 925 sterling silver and temple gold, handcrafted in Bengaluru.
           </p>
           <div className="mt-6 h-px w-24 bg-gold-soft/60" aria-hidden />
         </div>
@@ -55,7 +56,7 @@ export function Footer() {
             <FooterLink href="/sizing">Sizing</FooterLink>
           </FooterCol>
           <FooterCol label="Reach">
-            <FooterLink href="https://wa.me/919999999999" external>
+            <FooterLink href={contactHref()} external>
               <Icon name="whatsapp" size={12} /> WhatsApp
             </FooterLink>
             <FooterLink href="https://instagram.com/swarom.in" external>

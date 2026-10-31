@@ -10,6 +10,7 @@ import {
 } from "@/lib/supabase/server";
 import { requireUser } from "@/lib/auth/server";
 import type { Order, OrderItem } from "@/lib/supabase/types";
+import { contactHref } from "@/lib/contact";
 
 interface PageProps {
   params: { id: string };
@@ -155,7 +156,7 @@ export default async function OrderDetailPage({ params }: PageProps) {
           </div>
 
           <a
-            href={`https://wa.me/919999999999?text=${encodeURIComponent(`Hi Swarom, about order #${order.id.slice(0, 8)} —`)}`}
+            href={contactHref(`Hi Swarom, about order #${order.id.slice(0, 8)} —`)}
             target="_blank"
             rel="noopener noreferrer"
             className="swr-meta text-charcoal border-b border-[var(--hairline)] inline-flex items-center gap-2 self-start hover:border-charcoal"

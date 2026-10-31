@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, FormEvent } from "react";
+import { contactHref } from "@/lib/contact";
 
 export default function Home() {
   const [email, setEmail] = useState("");
@@ -139,7 +140,7 @@ export default function Home() {
           <span>© 2026 Swarom</span>
           <div className="flex items-center gap-5">
             <a
-              href="https://wa.me/919999999999?text=Hi%20Swarom%2C%20I%27d%20love%20to%20know%20when%20you%20launch."
+              href={contactHref("Hi Swarom, I'd love to know when you launch.")}
               target="_blank"
               rel="noopener noreferrer"
               className="hover:text-charcoal"
