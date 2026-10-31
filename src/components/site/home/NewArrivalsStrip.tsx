@@ -4,6 +4,7 @@ import type { Product } from "@/lib/supabase/types";
 import { formatINR } from "@/lib/money";
 import { ButtonLink } from "@/components/ui/Button";
 import { WishlistButton } from "@/components/site/WishlistButton";
+import { JaaliPanel } from "@/components/ui/Ornament";
 
 interface Props {
   products: Product[];
@@ -18,8 +19,9 @@ export function NewArrivalsStrip({ products, wishlist }: Props) {
   const show = products.slice(0, 3);
 
   return (
-    <section className="bg-charcoal py-16 md:py-28">
-      <div className="mx-auto max-w-marketing px-6 md:px-20">
+    <section className="relative overflow-hidden bg-charcoal py-16 md:py-28">
+      <JaaliPanel className="-right-16 -top-16 h-[420px] w-[420px]" opacity={0.2} />
+      <div className="relative mx-auto max-w-marketing px-6 md:px-20">
         <div className="flex flex-col items-center gap-4 mb-10 md:mb-14 text-center">
           <span className="swr-eyebrow !text-gold-soft">New Arrivals</span>
           <h2 className="font-serif text-[28px] md:text-[32px] leading-[1.3] tracking-[0.02em] text-cream">

@@ -1,3 +1,12 @@
+# Nothing in this folder ships by default: it holds supplier photography,
+# the working manifest, and the bench numbers behind our pricing.
 *
+
+# ...except the pipeline itself, which belongs in the repo.
 !.gitignore
 !README.md
+!upload.mjs
+!import.mjs
+!activate.mjs
+!migrate-to-cloudinary.mjs
+!run-sql.mjs

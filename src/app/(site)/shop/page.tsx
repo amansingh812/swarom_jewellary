@@ -1,7 +1,11 @@
 import Link from "next/link";
 import { ProductTile } from "@/components/site/ProductTile";
 import { ShopFilters } from "./ShopFilters";
-import { getProducts } from "@/lib/products";
+import {
+  getProducts,
+  getActiveCategories,
+  isPreviewingDrafts,
+} from "@/lib/products";
 import { getWishlistProductIds } from "@/app/actions/wishlist";
 import { Icon } from "@/components/ui/Icon";
 
@@ -22,12 +26,13 @@ export const metadata = {
 const STAGGER = ["", "md:mt-12 xl:mt-0", "xl:mt-12"];
 
 export default async function ShopPage({ searchParams }: ShopPageProps) {
-  const [fetched, wishlist] = await Promise.all([
+  const [fetched, wishlist, categories] = await Promise.all([
     getProducts({
       category: searchParams.cat ?? "all",
       collection: searchParams.collection,
     }),
     getWishlistProductIds(),
+    getActiveCategories(),
   ]);
 
   const sort = searchParams.sort ?? "newest";
@@ -48,10 +53,21 @@ export default async function ShopPage({ searchParams }: ShopPageProps) {
         </p>
       </header>
 
+      {isPreviewingDrafts() && (
+        <div className="mx-auto mb-12 max-w-3xl border-l-2 border-gold-soft bg-gold/[0.07] px-5 py-4">
+          <p className="font-sans text-[13px] leading-relaxed text-charcoal">
+            <span className="font-semibold">Local preview.</span> Draft pieces
+            are shown here because this is localhost. They are not on the live
+            site and cannot be bought — a draft has no confirmed purity or net
+            weight yet.
+          </p>
+        </div>
+      )}
+
       <div className="flex flex-col lg:flex-row gap-gutter">
         {/* Filters — sidebar on desktop, horizontal strip on mobile */}
         <aside className="w-full lg:w-64 flex-shrink-0 mb-10 lg:mb-0">
-          <ShopFilters active={searchParams.cat ?? "all"} sort={sort} />
+          <ShopFilters active={searchParams.cat ?? "all"} sort={sort} categories={categories} />
         </aside>
 
         {/* Product grid */}

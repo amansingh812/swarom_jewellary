@@ -4,11 +4,14 @@ import { createServerSupabaseClient, isSupabaseConfigured } from "@/lib/supabase
 import { Eyebrow } from "@/components/ui/Eyebrow";
 import { ButtonLink } from "@/components/ui/Button";
 import { formatINR } from "@/lib/money";
+import { CATEGORY_LABELS } from "@/lib/products";
 
 const PAGE_SIZE = 20;
 
 const STATUSES = ["active", "draft", "archived"] as const;
-const CATEGORIES = ["pendant", "ring", "bracelet", "anklet", "for-two"] as const;
+/** Every value of the `product_category` enum, straight from the labels map,
+ *  so a category added by a migration shows up here without a second edit. */
+const CATEGORIES = Object.keys(CATEGORY_LABELS);
 
 interface Row {
   id: string;
@@ -48,7 +51,7 @@ export default async function AdminProductsPage({ searchParams }: PageProps) {
   const status = STATUSES.includes(searchParams.status as (typeof STATUSES)[number])
     ? searchParams.status
     : undefined;
-  const cat = CATEGORIES.includes(searchParams.cat as (typeof CATEGORIES)[number])
+  const cat = CATEGORIES.includes(searchParams.cat ?? "")
     ? searchParams.cat
     : undefined;
   const page = Math.max(1, Number(searchParams.page) || 1);
@@ -133,7 +136,7 @@ export default async function AdminProductsPage({ searchParams }: PageProps) {
             <option value="">All</option>
             {CATEGORIES.map((c) => (
               <option key={c} value={c}>
-                {c}
+                {CATEGORY_LABELS[c] ?? c}
               </option>
             ))}
           </select>

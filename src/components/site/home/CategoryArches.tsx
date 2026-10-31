@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { ArchFrame } from "@/components/ui/Ornament";
+import { ArchFrame, SectionHeading } from "@/components/ui/Ornament";
 import { PHOTOS } from "@/lib/photos";
 
 const CATEGORIES = [
@@ -19,12 +19,11 @@ export function CategoryArches() {
   return (
     <section className="bg-cream">
       <div className="mx-auto max-w-marketing px-6 py-16 md:px-10 md:py-24 lg:px-20">
-        <div className="mb-12 text-center">
-          <p className="swr-eyebrow mb-3.5">Shop by piece</p>
-          <h2 className="font-serif text-[30px] leading-[1.2] text-charcoal md:text-[40px]">
-            What would you like engraved?
-          </h2>
-        </div>
+        <SectionHeading
+          eyebrow="Shop by piece"
+          title="What would you like engraved?"
+          className="mb-12"
+        />
 
         <ul className="m-0 grid list-none grid-cols-2 gap-5 p-0 md:grid-cols-5 md:gap-6">
           {CATEGORIES.map((c) => (

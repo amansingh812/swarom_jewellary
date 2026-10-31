@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { JaaliPanel, SectionHeading } from "@/components/ui/Ornament";
 
 const TIERS = [
   { href: "/shop?under=3000", amount: "Under ₹3,000", note: "Letters, charms, a first piece" },
@@ -9,14 +10,14 @@ const TIERS = [
 /** Gifting by budget — the fastest route in for someone shopping for a present. */
 export function PriceTiers() {
   return (
-    <section className="bg-cream">
-      <div className="mx-auto max-w-marketing px-6 py-16 md:px-10 md:py-20 lg:px-20">
-        <div className="mb-10 text-center md:mb-12">
-          <p className="swr-eyebrow mb-3.5">Gifting made simple</p>
-          <h2 className="font-serif text-[28px] leading-[1.2] text-charcoal md:text-[36px]">
-            Shop by budget
-          </h2>
-        </div>
+    <section className="relative overflow-hidden bg-cream">
+      <JaaliPanel className="-right-12 top-6 h-[300px] w-[300px]" opacity={0.12} />
+      <div className="relative mx-auto max-w-marketing px-6 py-16 md:px-10 md:py-20 lg:px-20">
+        <SectionHeading
+          eyebrow="Gifting made simple"
+          title="Shop by budget"
+          className="mb-10 md:mb-12"
+        />
 
         <ul className="m-0 grid list-none grid-cols-1 gap-5 p-0 md:grid-cols-3 md:gap-6">
           {TIERS.map((t) => (

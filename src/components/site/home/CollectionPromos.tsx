@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { ArchFrame } from "@/components/ui/Ornament";
+import { ArchFrame, SectionHeading } from "@/components/ui/Ornament";
 import { PHOTOS } from "@/lib/photos";
 
 interface Promo {
@@ -33,12 +33,11 @@ export function CollectionPromos() {
   return (
     <section className="bg-cream">
       <div className="mx-auto max-w-marketing px-6 py-16 md:px-10 md:py-24 lg:px-20">
-        <div className="mb-12 text-center">
-          <p className="swr-eyebrow mb-3.5">The collections</p>
-          <h2 className="font-serif text-[28px] leading-[1.2] text-charcoal md:text-[40px]">
-            Four small collections
-          </h2>
-        </div>
+        <SectionHeading
+          eyebrow="The collections"
+          title="Four small collections"
+          className="mb-12"
+        />
 
         <ul className="m-0 grid list-none grid-cols-1 gap-12 p-0 md:grid-cols-2 md:gap-14">
           {PROMOS.map((p) => (

@@ -291,6 +291,45 @@ function supabaseConfigured(): boolean {
   );
 }
 
+/**
+ * Which statuses the storefront may show.
+ *
+ * On localhost this includes `draft`, so a piece can be seen in place before
+ * it is priced. On Vercel it is `active` only — and that matters here,
+ * because preview and production share this database. A draft is a piece
+ * whose purity and net weight are still unknown; it must never be buyable.
+ */
+function visibleStatuses(): string[] {
+  return process.env.NODE_ENV === "development"
+    ? ["active", "draft"]
+    : ["active"];
+}
+
+/** True when the shop is showing drafts, so the UI can say so. */
+export function isPreviewingDrafts(): boolean {
+  return visibleStatuses().includes("draft");
+}
+
+/**
+ * The client the storefront reads through.
+ *
+ * Normally this is the cookie-bound anon client, so Postgres row-level
+ * security decides what the visitor may see — that policy
+ * (`status = 'active' or is_admin()`) is the real protection and stays.
+ *
+ * On localhost only, read through the service-role client instead, so the
+ * draft preview works whether or not anyone is signed in. This is gated on
+ * NODE_ENV, which Next sets to "production" for every build, so a deployed
+ * site never takes this branch. The service-role key is server-only and is
+ * never sent to the browser.
+ */
+async function storefrontClient() {
+  const mod = await import("@/lib/supabase/server");
+  return process.env.NODE_ENV === "development"
+    ? mod.createAdminSupabaseClient()
+    : mod.createServerSupabaseClient();
+}
+
 export async function getProducts(opts?: {
   category?: string;
   collection?: string;
@@ -310,12 +349,11 @@ export async function getProducts(opts?: {
     return list;
   }
   // Real Supabase fetch — added when DB is live.
-  const { createServerSupabaseClient } = await import("@/lib/supabase/server");
-  const supabase = createServerSupabaseClient();
+  const supabase = await storefrontClient();
   let query = supabase
     .from("products")
     .select("*")
-    .eq("status", "active")
+    .in("status", visibleStatuses())
     .order("created_at", { ascending: false });
   if (opts?.category && opts.category !== "all")
     query = query.eq("category", opts.category);
@@ -346,13 +384,12 @@ export async function getProduct(slug: string): Promise<Product | null> {
   if (!supabaseConfigured()) {
     return MOCK_PRODUCTS.find((p) => p.slug === slug) ?? null;
   }
-  const { createServerSupabaseClient } = await import("@/lib/supabase/server");
-  const supabase = createServerSupabaseClient();
+  const supabase = await storefrontClient();
   const { data, error } = await supabase
     .from("products")
     .select("*")
     .eq("slug", slug)
-    .eq("status", "active")
+    .in("status", visibleStatuses())
     .single();
   if (error) {
     console.error("getProduct error", error);
@@ -381,8 +418,7 @@ export async function getCollections(): Promise<CollectionSummary[]> {
       description: c.description,
     }));
   }
-  const { createServerSupabaseClient } = await import("@/lib/supabase/server");
-  const supabase = createServerSupabaseClient();
+  const supabase = await storefrontClient();
   const { data, error } = await supabase
     .from("collections")
     .select("id, slug, name, description")
@@ -393,4 +429,62 @@ export async function getCollections(): Promise<CollectionSummary[]> {
     return [];
   }
   return data ?? [];
+}
+
+/* ─── Category labels & the live category list ──────────────── */
+
+/** Display names for every value of the `product_category` enum. */
+export const CATEGORY_LABELS: Record<string, string> = {
+  pendant: "Pendants",
+  ring: "Rings",
+  bracelet: "Bracelets",
+  anklet: "Anklets",
+  "for-two": "For Two",
+  necklace: "Necklaces",
+  haram: "Haram",
+  earrings: "Earrings",
+  bangle: "Bangles",
+  mangalsutra: "Mangalsutra",
+};
+
+export interface CategoryOption {
+  key: string;
+  label: string;
+}
+
+/**
+ * The categories the shop filter should offer — derived from the categories
+ * that actually have active pieces, rather than a hardcoded list.
+ *
+ * This is why "Necklaces" was missing after the gold migration widened the
+ * enum: the sidebar was a literal array and nobody updated it. Deriving it
+ * means a new category appears the moment its first piece goes live, and a
+ * category with nothing in it never shows a dead link.
+ */
+export async function getActiveCategories(): Promise<CategoryOption[]> {
+  const all: CategoryOption = { key: "all", label: "All Pieces" };
+  const order = Object.keys(CATEGORY_LABELS);
+  const label = (c: string) => CATEGORY_LABELS[c] ?? c;
+
+  if (!supabaseConfigured()) {
+    const present = [...new Set(MOCK_PRODUCTS.map((p) => p.category))];
+    present.sort((a, b) => order.indexOf(a) - order.indexOf(b));
+    return [all, ...present.map((c) => ({ key: c, label: label(c) }))];
+  }
+
+  const supabase = await storefrontClient();
+  const { data, error } = await supabase
+    .from("products")
+    .select("category")
+    .in("status", visibleStatuses())
+    .returns<{ category: string }[]>();
+
+  if (error) {
+    console.error("getActiveCategories error", error);
+    return [all];
+  }
+
+  const present = [...new Set((data ?? []).map((r) => r.category))];
+  present.sort((a, b) => order.indexOf(a) - order.indexOf(b));
+  return [all, ...present.map((c) => ({ key: c, label: label(c) }))];
 }

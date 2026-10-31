@@ -126,3 +126,95 @@ export function KolamRule({ className = "" }: { className?: string }) {
     </svg>
   );
 }
+
+/**
+ * A section divider: hairline, kolam dot motif, hairline. Both rules fade to
+ * transparent at the outer ends so the mark reads as drawn rather than ruled.
+ */
+export function KolamDivider({ className = "" }: { className?: string }) {
+  return (
+    <div
+      className={`flex items-center justify-center gap-4 ${className}`}
+      aria-hidden="true"
+    >
+      <span className="h-px w-12 bg-gradient-to-r from-transparent to-gold-soft/70 md:w-20" />
+      <KolamRule />
+      <span className="h-px w-12 bg-gradient-to-l from-transparent to-gold-soft/70 md:w-20" />
+    </div>
+  );
+}
+
+/** A small ambi (paisley) outline — the mango motif, used as a quiet mark. */
+export function Paisley({
+  className = "",
+  size = 20,
+}: {
+  className?: string;
+  size?: number;
+}) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      aria-hidden="true"
+      focusable="false"
+      className={`shrink-0 text-gold-soft ${className}`}
+    >
+      <path
+        d="M14 3c5 3 7 9 4 14s-10 6-13 2 0-10 4-11c3-1 5 2 4 5"
+        stroke="currentColor"
+        strokeWidth="1.1"
+        strokeLinecap="round"
+      />
+    </svg>
+  );
+}
+
+/**
+ * The standard section opener — eyebrow, kolam divider, serif title, lede.
+ * Using one component keeps the rhythm identical down the page instead of
+ * every section inventing its own spacing.
+ */
+export function SectionHeading({
+  eyebrow,
+  title,
+  lede,
+  tone = "dark",
+  className = "",
+}: {
+  eyebrow?: string;
+  title: React.ReactNode;
+  lede?: string;
+  tone?: "dark" | "light";
+  className?: string;
+}) {
+  const onCream = tone === "dark";
+  return (
+    <div className={`flex flex-col items-center text-center ${className}`}>
+      {eyebrow && (
+        <p className={`swr-eyebrow mb-4 ${onCream ? "" : "!text-gold-soft"}`}>
+          {eyebrow}
+        </p>
+      )}
+      <KolamDivider className="mb-5" />
+      <h2
+        className={`font-serif text-[28px] leading-[1.2] md:text-[38px] ${
+          onCream ? "text-charcoal" : "text-cream"
+        }`}
+      >
+        {title}
+      </h2>
+      {lede && (
+        <p
+          className={`swr-lede mt-4 max-w-[460px] ${
+            onCream ? "" : "!text-cream/75"
+          }`}
+        >
+          {lede}
+        </p>
+      )}
+    </div>
+  );
+}

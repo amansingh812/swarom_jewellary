@@ -2,7 +2,13 @@
 
 import { useRouter, useSearchParams } from "next/navigation";
 
-const CATEGORIES = [
+interface CategoryOption {
+  key: string;
+  label: string;
+}
+
+/** Fallback only — the real list is derived from the catalogue and passed in. */
+const CATEGORIES: CategoryOption[] = [
   { key: "all", label: "All Pieces" },
   { key: "pendant", label: "Pendants" },
   { key: "ring", label: "Rings" },
@@ -21,7 +27,16 @@ const SORTS = [
  * Sticky filter sidebar — label-caps section headings over thin gold-grey
  * dividers, with quiet text links (category) and radio dots (sort).
  */
-export function ShopFilters({ active, sort }: { active: string; sort: string }) {
+export function ShopFilters({
+  active,
+  sort,
+  categories,
+}: {
+  active: string;
+  sort: string;
+  categories?: CategoryOption[];
+}) {
+  const categoryList = categories?.length ? categories : CATEGORIES;
   const router = useRouter();
   const params = useSearchParams();
 
@@ -40,7 +55,7 @@ export function ShopFilters({ active, sort }: { active: string; sort: string }) 
           Category
         </h3>
         <ul className="m-0 list-none p-0 space-y-3.5">
-          {CATEGORIES.map((c) => (
+          {categoryList.map((c) => (
             <li key={c.key}>
               <button
                 type="button"
